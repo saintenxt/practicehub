@@ -10,6 +10,7 @@ services:
       - ./server/uploads:/app/server/uploads
       - ./server/userdata.json:/app/server/userdata.json
       - ./server/matches.json:/app/server/matches.json
+      - ./server/messagedata.json:/app/server/messagedata.json
     expose:
       - "3000"
 

@@ -1,11 +1,11 @@
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 const messageController = require('../controllers/messageController');
-const {authenticateJWT} = require('../middleware/auth');
+const { authenticateJWT } = require('../middleware/auth');
 
 router.post('/', authenticateJWT, messageController.sendMessage);
-router.get('/conversations', authenticateJWT, messageController.getConversationsList);
+router.get('/conversations', authenticateJWT, messageController.getConversationList);
 router.get('/:userId', authenticateJWT, messageController.getConversation);
 router.patch('/read', authenticateJWT, messageController.markAsRead);
 
-module.exports = {router};
+module.exports = router;
