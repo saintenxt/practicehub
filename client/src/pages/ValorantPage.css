@@ -88,6 +88,9 @@
   white-space: nowrap;
   text-decoration: none;
 }
+.header_button {
+  min-width: 140px;
+}
 .game-page .shapka .header_button:hover {
   background: rgba(255, 255, 255, 0.25) !important;
 }
@@ -453,4 +456,42 @@
     padding: 14px 36px;
     font-size: 18px;
   }
+}
+
+/* Стили для чипов мета-информации */
+.match-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Цвета статуса */
+.meta-item.status.open {
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.15);
+}
+.meta-item.status.closed {
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.15);
+}
+
+/* Лёгкий подъём карточки при наведении (опционально) */
+.announcement-item {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.announcement-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }

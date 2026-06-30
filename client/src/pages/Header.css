@@ -19,6 +19,7 @@
   color: #696871;
   transition: color 0.2s;
   text-decoration: none;
+  font-size: 17px;
 }
 
 .header_list-link.active {
@@ -31,20 +32,20 @@
 }
 
 .header_button {
-  font-weight: 500;
-  font-size: 20px;
-  color: #19191B;
-  padding: 19px 59px;
   background: #ece9e9;
-  border-radius: 14px;
+  color: #19191B;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+  white-space: nowrap;
   text-decoration: none;
-  transition: background 0.2s;
-  height: 40px;
-  width: 100px;
-  display: flex;
-  justify-content: center; /* Выравнивание по горизонтали */
-  align-items: center;      /* Выравнивание по вертикали */
+  min-width: 140px;
 }
+
 
 .header_button:hover {
   background: #ddd;

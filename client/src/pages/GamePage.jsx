@@ -24,7 +24,7 @@ function GamePage() {
   useEffect(() => {
     loadMatches();
     fetchCurrentUser();
-  }, [game]); // перезагружаем при смене игры
+  }, [game]);
 
   const fetchCurrentUser = async () => {
     try {
@@ -74,7 +74,7 @@ function GamePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          game: game, // используем название из URL
+          game: game,
           title,
           description,
           date: new Date(date).toISOString()
@@ -163,14 +163,24 @@ function GamePage() {
                 <div key={match.id} className="announcement-item">
                   <h3>{match.title}</h3>
                   <p>{match.description}</p>
-                  <p className="match-date">🕒 {new Date(match.date).toLocaleString()}</p>
-                  <p className="match-author">👤 {match.author}</p>
-                  <p className="match-status">
-                    Статус: {match.status === 'open' ? '🟢 Открыто' : '🔴 Закрыто'}
-                  </p>
-                  <p className="match-players">
-                    👥 Записано: {match.players?.length || 0}
-                  </p>
+
+                  {/* НОВАЯ СТРУКТУРА МЕТА-ДАННЫХ */}
+                  <div className="match-meta">
+                    <span className="meta-item">
+                      📅 {new Date(match.date).toLocaleString('ru-RU', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </span>
+                    <span className="meta-item">👤 {match.author}</span>
+                    <span className={`meta-item status ${match.status === 'open' ? 'open' : 'closed'}`}>
+                      {match.status === 'open' ? 'Открыто' : 'Закрыто'}
+                    </span>
+                    <span className="meta-item">👥 {match.players?.length || 0}</span>
+                  </div>
 
                   {currentUser && !isAuthor && (
                     <>
