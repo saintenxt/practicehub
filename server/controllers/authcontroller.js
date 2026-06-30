@@ -21,10 +21,10 @@ exports.register = async (req, res) => {
 }
 
 exports.login= async (req, res) => {
-  const { username, password, email } = req.body;
-  let user = UserModel.findUserByUsername(username);
+  const { identifier, password} = req.body;
+  let user = UserModel.findUserByUsername(identifier);
   if (!user) {
-    user = UserModel.findUserByEmail(email);
+    user = UserModel.findUserByEmail(identifier);
   };
 
   if (!user) {
