@@ -153,7 +153,7 @@ function GamePage() {
       <div className="announcement-wrapper">
         <div className="valorant-announcements">
           {matches.length === 0 ? (
-            <p>Пока нет объявлений для {gameTitle}. Будьте первым!</p>
+            <p className="color">Пока нет объявлений для {gameTitle}. Будьте первым!</p>
           ) : (
             matches.map((match) => {
               const isAuthor = currentUser && match.userId === currentUser.id;

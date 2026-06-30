@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/static/css/main.4ea6e781.css",
-    "main.js": "/static/js/main.71a8e71e.js",
+    "main.css": "/static/css/main.de2d860c.css",
+    "main.js": "/static/js/main.30aee3f3.js",
     "static/media/LogoShapka2.png": "/static/media/LogoShapka2.c9e21258031b2769f1b0.png",
     "static/media/lol4.jpg": "/static/media/lol4.73d65fe3af45f6e6e5cc.jpg",
     "static/media/rl3.jpg": "/static/media/rl3.8a5ffb45fb8141747854.jpg",
     "static/media/valorant2.png": "/static/media/valorant2.f230ceef83717c983c08.png",
+    "static/media/logo.png": "/static/media/logo.baef315ce100fba0ae05.png",
     "static/media/cs21.jpg": "/static/media/cs21.88e829632218ee15bb14.jpg",
     "static/media/deadlock1.jpg": "/static/media/deadlock1.902f8c6a52d808701a61.jpg",
     "static/media/warface2.jpg": "/static/media/warface2.797f82b31b1b6a603bd7.jpg",
@@ -27,11 +28,11 @@
     "static/media/fragpunk.png": "/static/media/fragpunk.6c76dc508a4f9a422f10.png",
     "static/media/Logo.jpg": "/static/media/Logo.f94098ac9ae0999b0834.jpg",
     "index.html": "/index.html",
-    "main.4ea6e781.css.map": "/static/css/main.4ea6e781.css.map",
-    "main.71a8e71e.js.map": "/static/js/main.71a8e71e.js.map"
+    "main.de2d860c.css.map": "/static/css/main.de2d860c.css.map",
+    "main.30aee3f3.js.map": "/static/js/main.30aee3f3.js.map"
   },
   "entrypoints": [
-    "static/css/main.4ea6e781.css",
-    "static/js/main.71a8e71e.js"
+    "static/css/main.de2d860c.css",
+    "static/js/main.30aee3f3.js"
   ]
 }

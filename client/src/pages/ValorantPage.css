@@ -1,97 +1,187 @@
+/* ===== КОРЕНЬ СТРАНИЦЫ ===== */
 .game-page {
-  /* background-image: url('../photos/valorant3.jpg'); */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
-  border-radius: 0;
-  box-shadow: none;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  overflow-y: auto;            /* разрешаем вертикальную прокрутку */
+  overflow-x: hidden; /* ← главное: скрываем горизонтальный скролл */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-sizing: border-box;
 }
 
+.color {
+  color: white;
+}
 
+.game-page::-webkit-scrollbar {
+  display: none;               /* полностью убираем полосу */
+}
+/* ===== ШАПКА ===== */
 .game-page .shapka {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.2) !important;
   backdrop-filter: blur(5px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 10px 100px !important;
+  padding: 10px 40px !important; /* уменьшил отступы, чтобы не вылезали */
   border-radius: 0 !important;
+  z-index: 100;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* перенос на маленьких экранах */
 }
 
-.game-page .header_list-link {
+.game-page .shapka .header_nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.game-page .shapka .header_list {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.game-page .shapka .header_list-link {
   color: rgba(255, 255, 255, 1) !important;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  white-space: nowrap;
 }
-.game-page .header_list-link:hover {
-  color: #ffffff !important;
-}
-.game-page .header_list-link.active {
+.game-page .shapka .header_list-link:hover,
+.game-page .shapka .header_list-link.active {
   color: #ffffff !important;
 }
 
-.game-page .header_button {
+.game-page .shapka .header_button {
   background: rgba(255, 255, 255, 0.15) !important;
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(5px);
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+  white-space: nowrap;
+  text-decoration: none;
 }
-.game-page .header_button:hover {
+.game-page .shapka .header_button:hover {
   background: rgba(255, 255, 255, 0.25) !important;
 }
 
-/* ===== КОНТЕНТ (слева вверху) ===== */
-.valorant-content {
-  position: absolute;
-  top: 120px;
-  left: 60px;
+/* ===== КОНТЕНТ (текст) ===== */
+.game-page .valorant-content {
+  position: relative; /* убрал absolute */
+  margin-top: 80px; /* чтобы не перекрывался шапкой */
+  margin-left: 40px;
+  margin-right: 40px;
   background: rgba(0, 0, 0, 0.35);
   color: white;
-  padding: 60px 80px;
+  padding: 40px 50px;
   border-radius: 30px;
-  max-width: 800px;
-  width: 90%;
+  max-width: 700px;
+  width: calc(100% - 80px); /* адаптивная ширина */
   text-align: left;
   backdrop-filter: blur(5px);
-  z-index: 1;
+  box-sizing: border-box;
 }
 
-.valorant-content h1 {
-  font-size: 50px;
+.game-page .valorant-content h1 {
+  font-size: 48px;
   margin-bottom: 20px;
   font-weight: 600;
   letter-spacing: 4px;
   text-shadow: 0 0 30px rgba(255, 70, 85, 0.3);
 }
-.valorant-content p {
-  font-size: 22px;
+.game-page .valorant-content p {
+  font-size: 20px;
   opacity: 0.9;
+  line-height: 1.6;
 }
 
-
-
-.announcement-wrapper {
-  position: absolute;
-  bottom: 80px;
-  left: 80px;
+/* ===== БЛОК ОБЪЯВЛЕНИЙ ===== */
+.game-page .announcement-wrapper {
+  position: relative;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  width: calc(100% - 80px);
+  max-width: 750px;
   display: flex;
-  flex-direction: column;        
+  flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  z-index: 1;
+  box-sizing: border-box;
 }
 
+.game-page .valorant-announcements {
+  width: 100%;
+  max-height: 400px;
+  min-height: 200px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 20px 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
 
-.add-announcement-btn {
+.game-page .valorant-announcements::-webkit-scrollbar {
+  width: 6px;
+}
+.game-page .valorant-announcements::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+.game-page .valorant-announcements::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.game-page .announcement-item {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 18px;
+  padding: 15px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.2s, padding-left 0.2s;
+  border-radius: 8px;
+}
+.game-page .announcement-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  padding-left: 20px;
+}
+.game-page .announcement-item:last-child {
+  border-bottom: none;
+}
+
+/* Кнопка "Разместить объявление" */
+.game-page .add-announcement-btn {
   padding: 10px 28px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
@@ -105,7 +195,7 @@
   white-space: nowrap;
   font-family: inherit;
 }
-.add-announcement-btn:hover {
+.game-page .add-announcement-btn:hover {
   background: rgba(255, 70, 85, 0.25);
   border-color: rgba(255, 70, 85, 0.4);
   color: #ff4655;
@@ -113,51 +203,29 @@
   box-shadow: 0 8px 25px rgba(255, 70, 85, 0.15);
 }
 
-
-.valorant-announcements {
-  width: 700px;               
-  max-height: 400px;
-  min-height: 200px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  border-radius: 20px;
-  padding: 20px 25px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-  overflow-y: auto;
+/* Кнопки внутри объявлений */
+.game-page .join-btn,
+.game-page .leave-btn,
+.game-page .delete-btn {
+  padding: 6px 14px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+}
+.game-page .join-btn {
+  background: #4CAF50;
+}
+.game-page .leave-btn {
+  background: #ff9800;
+}
+.game-page .delete-btn {
+  background: #f44336;
 }
 
-
-.valorant-announcements::-webkit-scrollbar {
-  width: 6px;
-}
-.valorant-announcements::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-}
-.valorant-announcements::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-}
-
-
-.announcement-item {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 18px;
-  padding: 15px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  transition: background 0.2s, padding-left 0.2s;
-  border-radius: 8px;
-}
-.announcement-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  padding-left: 20px;
-}
-.announcement-item:last-child {
-  border-bottom: none;
-}
-
-/* ===== МОДАЛЬНОЕ ОКНО (вынесено из медиа-запроса) ===== */
+/* ===== МОДАЛЬНОЕ ОКНО (не зависит от родителя) ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -187,17 +255,12 @@
   animation: fadeIn 0.3s ease;
   max-height: 90vh;
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; transform: scale(0.95) translateY(-20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .modal-content h2 {
@@ -205,13 +268,11 @@
   margin-bottom: 25px;
   text-align: center;
 }
-
 .modal-content form {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
-
 .modal-content label {
   display: flex;
   flex-direction: column;
@@ -220,7 +281,6 @@
   font-weight: 500;
   color: rgba(255, 255, 255, 0.8);
 }
-
 .modal-content input,
 .modal-content textarea {
   padding: 12px 16px;
@@ -233,25 +293,21 @@
   transition: border-color 0.3s, background 0.3s;
   outline: none;
 }
-
 .modal-content input:focus,
 .modal-content textarea:focus {
   border-color: #ff4655;
   background: rgba(255, 255, 255, 0.1);
 }
-
 .modal-content input::placeholder,
 .modal-content textarea::placeholder {
   color: rgba(255, 255, 255, 0.3);
 }
-
 .modal-buttons {
   display: flex;
   gap: 15px;
   margin-top: 10px;
   justify-content: flex-end;
 }
-
 .submit-btn,
 .cancel-btn {
   padding: 12px 30px;
@@ -262,7 +318,6 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .submit-btn {
   background: #ff4655;
   color: white;
@@ -271,51 +326,68 @@
   background: #ff6a7a;
   transform: scale(1.02);
 }
+.cancel-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+.cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
 
 /* ===== АДАПТАЦИЯ ===== */
 
-/* Мобильные */
+/* Мобильные (≤ 768px) */
 @media (max-width: 768px) {
-  .valorant-page .shapka {
-    padding: 10px 20px !important;
+  .game-page {
+    padding: 0;
   }
-  .valorant-content {
-    top: 100px;
-    left: 20px;
-    right: 20px;
-    padding: 30px;
-    max-width: none;
-    width: auto;
+  .game-page .shapka {
+    padding: 8px 15px !important;
   }
-  .valorant-content h1 {
-    font-size: 40px;
+  .game-page .shapka .header_list {
+    gap: 10px;
   }
-  .valorant-content p {
-    font-size: 18px;
+  .game-page .shapka .header_button {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+  .game-page .shapka .header_list-link {
+    font-size: 13px;
+    padding: 4px 6px;
   }
 
-  .announcement-wrapper {
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    align-items: stretch;
+  .game-page .valorant-content {
+    margin: 70px 15px 20px 15px;
+    padding: 20px;
+    width: calc(100% - 30px);
   }
-  .add-announcement-btn {
+  .game-page .valorant-content h1 {
+    font-size: 28px;
+  }
+  .game-page .valorant-content p {
+    font-size: 16px;
+  }
+
+  .game-page .announcement-wrapper {
+    margin: 10px 15px 20px 15px;
+    width: calc(100% - 30px);
+  }
+  .game-page .valorant-announcements {
+    max-height: 250px;
+    min-height: 120px;
+    padding: 15px;
+  }
+  .game-page .add-announcement-btn {
     width: 100%;
     text-align: center;
     white-space: normal;
+    padding: 12px;
   }
-  .valorant-announcements {
-    width: auto;
-    max-height: 250px;
-    min-height: 150px;
-  }
-
   .modal-content {
-    padding: 30px 25px;
+    padding: 25px 20px;
   }
   .modal-content h2 {
-    font-size: 24px;
+    font-size: 22px;
   }
   .modal-buttons {
     flex-direction: column;
@@ -327,71 +399,58 @@
   }
 }
 
-/* Ноутбуки (769px – 1200px) */
-@media (max-width: 1200px) and (min-width: 769px) {
-  .valorant-content {
-    top: 120px;
-    left: 40px;
+/* Планшеты (769–1200px) */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .game-page .shapka {
+    padding: 10px 30px !important;
+  }
+  .game-page .valorant-content {
+    margin-left: 30px;
+    margin-right: 30px;
+    width: calc(100% - 60px);
+    max-width: 550px;
     padding: 30px 40px;
-    max-width: 450px;
   }
-  .valorant-content h1 {
-    font-size: 48px;
+  .game-page .valorant-content h1 {
+    font-size: 40px;
   }
-  .valorant-announcements {
-    width: 500px;
+  .game-page .announcement-wrapper {
+    margin-left: 30px;
+    margin-right: 30px;
+    width: calc(100% - 60px);
+  }
+  .game-page .valorant-announcements {
     max-height: 350px;
   }
 }
 
-
-@media (min-width: 1601px) {
-  .valorant-content {
-    top: 120px;
-    left: 40px;
-    padding: 80px 100px;
+/* Крупные экраны (≥ 1600px) */
+@media (min-width: 1600px) {
+  .game-page .shapka {
+    padding: 15px 80px !important;
+  }
+  .game-page .valorant-content {
+    margin-left: 80px;
     max-width: 800px;
+    padding: 60px 80px;
   }
-  .valorant-content h1 {
-    font-size: 74px;
+  .game-page .valorant-content h1 {
+    font-size: 70px;
   }
-  .valorant-content p {
+  .game-page .valorant-content p {
     font-size: 26px;
   }
-  .announcement-wrapper {
-    bottom: 50px;
-    left: 40px;
-    gap: 12px;
+  .game-page .announcement-wrapper {
+    margin-left: 80px;
+    max-width: 800px;
   }
-  .valorant-announcements {
-    width: 800px;
+  .game-page .valorant-announcements {
     max-height: 500px;
     min-height: 300px;
     padding: 30px 35px;
   }
-  .add-announcement-btn {
+  .game-page .add-announcement-btn {
     padding: 14px 36px;
     font-size: 18px;
   }
-}
-
-.join-btn, .leave-btn, .delete-btn {
-  padding: 6px 14px;
-  margin-right: 8px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
-.join-btn {
-  background: #4CAF50;
-  color: white;
-}
-.leave-btn {
-  background: #ff9800;
-  color: white;
-}
-.delete-btn {
-  background: #f44336;
-  color: white;
 }
