@@ -10,6 +10,4 @@ router.delete('/:id',authenticateJWT, matchController.deleteMatch);
 router.post('/:id/join', authenticateJWT, matchController.joinMatch);
 router.post('/:id/leave', authenticateJWT, matchController.leaveMatch);
 
-
-
 module.exports = router;

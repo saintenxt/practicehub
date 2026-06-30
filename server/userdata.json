@@ -13,6 +13,14 @@
     "password": "$2b$10$xOFr2tJR9cNLCLmcYv6HMOab5CWl2wrv8rdaSzi1kKKees.b31dXC",
     "email": "maza7707@gmail.com",
     "role": "user",
-    "avatar": "1782728747829-1782802245903.jpg"
+    "avatar": "1782728747829-1782760174913.jpg"
+  },
+  {
+    "id": "1782803187779",
+    "username": "ahaleyMaHaley",
+    "password": "$2b$10$gGdzFIzXzrJqnZJeaOIY1O6xzBrNjo163VSXnytl5Iw5h8WItuEhe",
+    "email": "epta@mail.ru",
+    "role": "user",
+    "avatar": "1782803187779-1782803730691.jpg"
   }
 ]
