@@ -8,7 +8,7 @@ import Game from './pages/GamePage';
 import Companies from './pages/Companies';
 import ProtectedRoute from './components/protectedRoute';
 import ProfilePage from './pages/ProfilePage';
-import MessagePage from './pages/MessagePage';   // ← новый импорт
+import MessagePage from './pages/MessagePage';   
 import './App.css';
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
           }
         />
         <Route
-          path="/match"   // ← новый маршрут
+          path="/match"   
           element={
             <ProtectedRoute>
               <>

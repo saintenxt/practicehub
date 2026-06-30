@@ -28,7 +28,8 @@ const LoginPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: formData.username,
-          password: formData.password
+          password: formData.password,
+          email: formData.email
         }),
         credentials: 'include' 
       });
