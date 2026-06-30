@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1782760145313",
+    "userId": "1782728747829",
+    "game": "cs2",
+    "title": "qweq",
+    "description": "qweqewq",
+    "date": "2026-07-10T21:09:00.000Z",
+    "status": "open",
+    "players": []
+  },
+  {
+    "id": "1782764698027",
+    "userId": "1782728747829",
+    "game": "brawlstars",
+    "title": "2131",
+    "description": "21321",
+    "date": "2026-07-11T23:24:00.000Z",
+    "status": "open",
+    "players": []
+  },
+  {
+    "id": "1782802794520",
+    "userId": "1782728747829",
+    "game": "deadlock",
+    "title": "werwe",
+    "description": "weqewqe",
+    "date": "2026-07-01T11:00:00.000Z",
+    "status": "open",
+    "players": []
+  }
+]

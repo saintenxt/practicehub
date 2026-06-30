@@ -1,0 +1,70 @@
+.hero {
+  padding-block: 30px;           /* ← Уменьшили отступы */
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: #FEFCFF;
+  box-shadow: 
+    inset 0 -10px 10px -7px rgba(0, 0, 0, 0.2),
+    inset 0 10px 10px -7px rgba(0, 0, 0, 0.2);
+}
+
+.hero_container {
+  max-width: 2500px;
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;        /* ← Центрируем содержимое */
+}
+
+.hero_games {
+  max-width: 800px;              /* ← Ширина блока */
+  width: 100%;                   /* ← На всю доступную ширину */
+  margin: 0;                     /* ← Убираем лишние отступы */
+  
+  background-color: #ece9e9;
+  border-radius: 30px;
+  height: 1030px;                 /* ← Уменьшили высоту */
+  overflow-y: auto;              /* ← Скролл только по вертикали */
+  padding: 20px;
+  
+  /* Скрываем скроллбар для красоты (но он работает) */
+  scrollbar-width: thin;         /* Тонкий скролл для Firefox */
+  scrollbar-color: #888 #e0e0e0; /* Цвета скролла */
+}
+
+
+.games-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;                     /* ← Уменьшили расстояние между карточками */
+  align-items: center;
+}
+
+.game-card-link {
+  width: 95%;                    /* ← Карточки почти на всю ширину блока */
+  max-width: 750px;
+}
+
+/* Убираем отступы у последней карточки */
+.games-grid .game-card-link:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-block: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  
+  .hero_games {
+    height: 500px;
+    max-width: 100%;
+    border-radius: 20px;
+    padding: 15px;
+  }
+  
+  .game-card-link {
+    width: 98%;
+  }
+}
+

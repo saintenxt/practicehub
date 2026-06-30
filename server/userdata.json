@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1782715723859",
+    "username": "qwerty6",
+    "password": "$2b$10$Y3Cf1zl51nwl01PRIV38..xk3PuN3rORz6iA1P67MCRMwmgco9I6m",
+    "email": "demonmazart@rambler.ru",
+    "role": "user",
+    "avatar": "1782715723859-1782727474826.jpg"
+  },
+  {
+    "id": "1782728747829",
+    "username": "qwerty13",
+    "password": "$2b$10$xOFr2tJR9cNLCLmcYv6HMOab5CWl2wrv8rdaSzi1kKKees.b31dXC",
+    "email": "maza7707@gmail.com",
+    "role": "user",
+    "avatar": "1782728747829-1782802245903.jpg"
+  }
+]

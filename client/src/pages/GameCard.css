@@ -1,0 +1,23 @@
+.game-card-link {
+  text-decoration: none;
+  display: flex;
+  
+}
+
+.game-card {
+  background-color: #ece9e9;
+  border-radius: 30px;
+  padding: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.game-image {
+  width: 673px;
+  height: 147px;
+  border-radius: 20px;
+  display: flex;
+}

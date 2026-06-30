@@ -1,0 +1,46 @@
+.shapka {
+  padding: 10px 100px;
+}
+
+.header_nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_list {
+  display: flex;
+  gap: 50px;
+  list-style: none;
+}
+
+.header_list-link {
+  font-weight: 500;
+  color: #696871;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.header_list-link.active {
+  color: #19191B;
+  font-weight: 500;
+}
+
+.header_list-link:hover {
+  color: #19191B;
+}
+
+.header_button {
+  font-weight: 500;
+  font-size: 20px;
+  color: #19191B;
+  padding: 19px 59px;
+  background: #ece9e9;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.header_button:hover {
+  background: #ddd;
+}
