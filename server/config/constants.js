@@ -4,5 +4,6 @@ module.exports = {
   PORT: 3000,
   SECRET_KEY: 'ваш-супер-секретный-ключ',
   USER_FILES: path.join(__dirname, '../userdata.json'),
-  MATCHES_FILE: path.join(__dirname, '../matches.json')   // <-- ЭТА СТРОКА ДОЛЖНА БЫТЬ
+  MATCHES_FILE: path.join(__dirname, '../matches.json'),
+  MESSAGES_FILE: path.join(__dirname, '../messagedata.json')
 };
