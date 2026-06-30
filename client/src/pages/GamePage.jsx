@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './ValorantPage.css';
 import Header from './Header';
 import { gameData } from '../gameData';
@@ -139,6 +139,7 @@ function GamePage() {
     }
   };
 
+
   if (loading) return <div className="loading">Загрузка...</div>;
 
   return (
@@ -189,13 +190,20 @@ function GamePage() {
                           Записаться
                         </button>
                       ) : (
+                        <>
                         <button className="leave-btn" onClick={() => handleLeave(match.id)}>
                           Отписаться
                         </button>
-                      )}
+                      
+                        <Link to={`/match/${match.userId}`} className="chat-btn">
+                          Чат с автором
+                        </Link>
+                        </>
+                      )} 
+                    
                     </>
                   )}
-
+                    
                   {isAuthor && (
                     <button className="delete-btn" onClick={() => handleDelete(match.id)}>
                       Удалить

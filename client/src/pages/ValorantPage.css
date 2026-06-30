@@ -209,7 +209,8 @@
 /* Кнопки внутри объявлений */
 .game-page .join-btn,
 .game-page .leave-btn,
-.game-page .delete-btn {
+.game-page .delete-btn,
+.game-page .chat-btn {
   padding: 6px 14px;
   margin-right: 8px;
   border: none;
