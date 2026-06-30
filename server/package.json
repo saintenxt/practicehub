@@ -16,9 +16,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.3",
-    "multer": "^2.2.0",
-    "path": "^0.12.7"
+    "multer": "^2.2.0"
   }
 }
