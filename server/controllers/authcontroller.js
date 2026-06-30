@@ -21,9 +21,10 @@ exports.register = async (req, res) => {
 }
 
 exports.login= async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   const user = UserModel.findUserByUsername(username);
-  if (!user) {
+  const userEmail = UserModel.findUserByEmail(email);
+  if (!user || !userEmail) {
     return res.status(401).json({ error: 'Неверный логин или пароль' });
   }
 
