@@ -30,7 +30,7 @@ exports.createMatch = (req, res) => {
     return res.status(400).json({error: 'Неправильный ввод данны'});
   };
 
-  if (matchDate > now) {
+  if (matchDate < now) {
     return res.status(400).json({error: 'Дата должна быть актуальной'});
   };
 
