@@ -5,20 +5,17 @@ import logo from '../photos/logo.png';
 
 function Header() {
   const location = useLocation();
-  
-  const isActive = (path) => {
-    return location.pathname === path ? 'active' : '';
-  };
-
-  // Пример статического числа уведомлений – позже замените на состояние/пропс
-  const notificationCount = 3;
+  const isActive = (path) => location.pathname === path ? 'active' : '';
 
   return (
     <header className="shapka">
       <nav className="header_nav">
+        {/* Логотип слева */}
         <Link to="/">
           <img src={logo} width="100" height="50" alt="Logo" />
         </Link>
+
+        {/* Центральное меню */}
         <ul className="header_list">
           <li>
             <Link className={`header_list-link ${isActive('/')}`} to="/">
@@ -32,19 +29,15 @@ function Header() {
           </li>
         </ul>
 
-        {/* НОВЫЙ БЛОК – уведомления */}
-        <div className="header_notification">
-          <button className="notification_button" onClick={() => {/* временно */}}>
+        {/* Правый блок: колокольчик + кнопка */}
+        <div className="header_right">
+          <button className="notification_button" onClick={() => { /* временно */ }}>
             <i className="fas fa-bell"></i>
-            {notificationCount > 0 && (
-              <span className="notification_badge">{notificationCount}</span>
-            )}
           </button>
+          <Link className="header_button" to="/profile">
+            Личный кабинет
+          </Link>
         </div>
-
-        <Link className="header_button" to="/profile">
-          Личный кабинет
-        </Link>
       </nav>
     </header>
   );
