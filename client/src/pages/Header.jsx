@@ -17,7 +17,7 @@ function Header() {
       .catch(() => {});
   }, []);
 
-  const messagesPath = `/messages/${userId}`;
+  const messagesPath = userId ? `/messages/${userId}` : '/messages';
 
   return (
     <header className="shapka">
