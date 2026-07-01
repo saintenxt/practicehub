@@ -1,4 +1,4 @@
-import tgIcon from '../photos/tg.png';
+import tgIcon from '../photos/tg.jpg';
 
 const Companies = () => {
   return (
