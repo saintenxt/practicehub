@@ -1,4 +1,5 @@
-import { useState, useEffect, useNavigate } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../pages/Header';
 
 const navigate = useNavigate();
