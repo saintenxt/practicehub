@@ -68,14 +68,14 @@ function GamePage() {
       alert('Заполните все поля');
       return;
     }
-    const thisDate = Date(date);
+    const thisDate = new Date(date);
     if (thisDate < new Date()) {
       alert('Дата должна быть актуальной')
       return;
     }
 
     if (thisDate > new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)) {
-      alert('Дата не позднее чем через год')
+      alert('Дата не позднее чем через год');
     }
     try {
       const response = await fetch('/api/matches', {
