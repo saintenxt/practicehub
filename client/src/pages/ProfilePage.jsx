@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../pages/Header';
 
-const navigate = useNavigate();
+
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,8 @@ const ProfilePage = () => {
   
   const [userMatches, setUserMatches] = useState([]);
   const [matchesLoading, setMatchesLoading] = useState(true);
-
+  
+  const navigate = useNavigate();
   useEffect(() => {
     fetchProfile();
     fetchUserMatches(); 
