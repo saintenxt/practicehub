@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Message.css';
+import '.Header'
 
 function MessagePage() {
   const [chats, setChats] = useState([]);
@@ -27,7 +28,7 @@ function MessagePage() {
   const loadConversations = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/messages/match', {
+      const res = await fetch('/api/messages', {
         credentials: 'include'
       });
       const data = await res.json();
@@ -42,6 +43,7 @@ function MessagePage() {
         time: conv.lastMessageDate ? new Date(conv.lastMessageDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
         unreadCount: conv.unreadCount || 0
       }));
+
 
       setChats(formattedChats);
     } catch (err) {
@@ -90,7 +92,7 @@ function MessagePage() {
     let messageText = newMessage.trim();
     if (attachedFiles.length > 0) {
       const fileNames = attachedFiles.map(file => file.name).join(', ');
-      messageText = messageText ? `${messageText}\n📎 Прикреплены: ${fileNames}` : `📎 Прикреплены: ${fileNames}`;
+      messageText = messageText ? `${messageText}\n Прикреплены: ${fileNames}` : `Прикреплены: ${fileNames}`;
       setAttachedFiles([]);
     }
 
@@ -188,14 +190,7 @@ function MessagePage() {
   return (
     <div className="message-page">
       <div className="message-container">
-        <div className="message-search">
-          <input
-            type="text"
-            placeholder="Поиск чатов..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+        <Header />
 
         <div className="message-main">
           <div className="chat-list">

@@ -18,7 +18,7 @@ function findUserByUsername(username) {
 }
 
 function findUserByEmail(email) {
-  return read_users().find(u => u.email ===email);
+  return read_users().find(u => u.email === email);
 }
 
 function findUserByID(id) {
