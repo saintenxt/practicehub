@@ -23,7 +23,7 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link className={`header_list-link ${isActive('/match')}`} to="/match">
+            <Link className={`header_list-link ${isActive('/messages')}`} to="/messages">
               Сообщения
             </Link>
           </li>

@@ -58,7 +58,7 @@ function App() {
           }
           />
         <Route 
-        path="/match/:id"
+        path="/messages/:id"
         element={
           <ProtectedRoute>
             <MessagePage/>
