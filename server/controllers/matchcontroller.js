@@ -27,7 +27,7 @@ exports.createMatch = (req, res) => {
   const maxDate = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());
 
   if (isNaN(matchDate)) {
-    return res.status(400).json({error: 'Неправильный ввод данны'});
+    return res.status(400).json({error: 'Неправильный ввод данных'});
   };
 
   if (matchDate < now) {

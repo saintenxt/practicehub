@@ -120,7 +120,7 @@ const handleJoin = async (matchId) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             toUserId: match.userId,
-            text: `Я записался на ваше объявление "${match.title}". Давайте договоримся об условиях.`
+            text: `Я записался на ваше объявление по игре "${match.title}". Давайте договоримся об условиях.`
           }),
           credentials: 'include'
         });
@@ -228,7 +228,7 @@ const handleJoin = async (matchId) => {
                           Отписаться
                         </button>
                       
-                        <Link to={`/${match.userId}`} className="chat-btn">
+                        <Link to={`/messages/${currentUser.id}`} className="chat-btn">
                           Чат с автором
                         </Link>
                         </>
