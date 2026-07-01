@@ -30,7 +30,39 @@ function MessagePage() {
     }
   }, [activeChatId]);
 
+useEffect(() => {
+  let interval;
+
+  const startPolling = () => {
+    interval = setInterval(() => {
+      loadConversations();
+      if (activeChatId) loadMessages(activeChatId);
+    }, 5000);
+  };
+
+  const stopPolling = () => clearInterval(interval);
+
   
+  startPolling();
+
+
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      stopPolling();
+    } else {
+      startPolling();
+    }
+  };
+
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+
+  return () => {
+    stopPolling();
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+  };
+}, [activeChatId]);
+
+
   const loadConversations = async () => {
     try {
       setLoading(true);
