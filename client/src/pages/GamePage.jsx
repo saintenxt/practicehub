@@ -115,7 +115,7 @@ const handleJoin = async (matchId) => {
     if (match && currentUser) {
 
       try {
-        await fetch('/api/messages', {
+        await fetch('/api/messages/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
