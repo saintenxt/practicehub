@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../pages/Header';
 
-const navigate = useNavigate
+const navigate = useNavigate();
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -57,7 +57,7 @@ const ProfilePage = () => {
   const fetchUserMatches = async () => {
     try {
       setMatchesLoading(true);
-      const response = await fetch('/api/user/matches', {
+      const response = await fetch('/api/matches/my', {
         credentials: 'include'
       });
       const data = await response.json();
