@@ -35,7 +35,7 @@ async function createUser(username, email, password) {
         password: hashedPassword,
         email,
         role: 'user',
-        avatar: null 
+        avatar: '../uploads/photo.png' 
     };
     users.push(new_user);
     write_users(users);

@@ -57,6 +57,14 @@ function App() {
             </ProtectedRoute>
           }
           />
+        <Route 
+        path="/match/:id"
+        element={
+          <ProtectedRoute>
+            <MessagePage/>
+          </ProtectedRoute>
+        }
+        />
         <Route path="/" element={<Navigate to="/mainpage" />} />
         <Route path="*" element={<Navigate to="/mainpage" />} />
       </Routes>
