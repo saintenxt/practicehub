@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Message.css';
-import '.Header'
+import Header from './Header';
 
 function MessagePage() {
   const [chats, setChats] = useState([]);
