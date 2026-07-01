@@ -12,4 +12,5 @@ router.post('/avatar', authenticateJWT,upload, userController.uploadAvatar);
 router.delete('/avatar', authenticateJWT, userController.deleteAvatar );
 
 
+
 module.exports = router;

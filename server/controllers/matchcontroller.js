@@ -121,3 +121,16 @@ exports.deleteMatch = (req, res) => {
   matchModel.deleteMatch(id);
   res.json({ message: 'Объявление удалено' });
 };
+
+exports.getMyMatches = (req, res) => {
+  const { id } = req.user.id;
+  const matches = matchModel.getMatchesByUserId(id);
+
+  const usermatches = matches.map(m => {
+    const user = UserModel.findUserByID(match.id);
+    return {
+      ...m,
+      author: user ? user.username : 'unknown'
+    };
+  });
+};

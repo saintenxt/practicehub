@@ -56,6 +56,14 @@ function deleteMatch(id) {
   return true;
 }
 
+function getMatchesByUserId(id) {
+  const matches = readMatches();
+  return matches.filter(m => 
+    String(m.userId) === String(userId || 
+    (m.players && m.players.some(p => String(p) === String(userId)))
+    ).sort((a, b) => new Date(a.date) - new Date(b.date)));
+};
+
 module.exports = {
   readMatches,
   writeMatches,
@@ -63,5 +71,6 @@ module.exports = {
   findMatchById,
   createMatch,
   updateMatch,
-  deleteMatch
+  deleteMatch,
+  getMatchesByUserId
 };
