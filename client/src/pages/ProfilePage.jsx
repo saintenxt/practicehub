@@ -66,7 +66,7 @@ const ProfilePage = () => {
     }
   };
 
-  // ---- Обработчики профиля ----
+  
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
