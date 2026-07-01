@@ -28,16 +28,6 @@ function Header() {
             </Link>
           </li>
         </ul>
-
-        {/* Правый блок: колокольчик + кнопка */}
-        <div className="header_right">
-          <button className="notification_button" onClick={() => { /* временно */ }}>
-            <i className="fas fa-bell"></i>
-          </button>
-          <Link className="header_button" to="/profile">
-            Личный кабинет
-          </Link>
-        </div>
       </nav>
     </header>
   );
