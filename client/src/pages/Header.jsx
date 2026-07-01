@@ -3,20 +3,19 @@ import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 import logo from '../photos/logo.png';
 
-
 function Header() {
   const location = useLocation();
-  
-  const isActive = (path) => {
-    return location.pathname === path ? 'active' : '';
-  };
+  const isActive = (path) => location.pathname === path ? 'active' : '';
 
   return (
     <header className="shapka">
       <nav className="header_nav">
+        {/* Логотип слева */}
         <Link to="/">
           <img src={logo} width="100" height="50" alt="Logo" />
         </Link>
+
+        {/* Центральное меню */}
         <ul className="header_list">
           <li>
             <Link className={`header_list-link ${isActive('/')}`} to="/">
@@ -24,14 +23,21 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link className={`header_list-link ${isActive('/match')}`} to="/match">
+            <Link className={`header_list-link ${isActive('/messages')}`} to="/messages">
               Сообщения
             </Link>
           </li>
         </ul>
-        <Link className="header_button" to="/profile">
-          Личный кабинет
-        </Link>
+
+        {/* Правый блок: колокольчик + кнопка */}
+        <div className="header_right">
+          <button className="notification_button" onClick={() => { /* временно */ }}>
+            <i className="fas fa-bell"></i>
+          </button>
+          <Link className="header_button" to="/profile">
+            Личный кабинет
+          </Link>
+        </div>
       </nav>
     </header>
   );

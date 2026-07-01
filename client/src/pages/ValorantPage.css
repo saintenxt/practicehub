@@ -80,13 +80,14 @@
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(5px);
-  padding: 8px 18px;
-  border-radius: 8px;
+  padding: 14px 20px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px;
   transition: 0.3s;
   white-space: nowrap;
   text-decoration: none;
+  text-align: center;
 }
 .header_button {
   min-width: 140px;
@@ -226,7 +227,13 @@
   background: #ff9800;
 }
 .game-page .delete-btn {
-  background: #f44336;
+  background: red;
+}
+.game-page .chat-btn {
+  background: #ce1ed4
+}
+.chat-btn {
+  margin-right: 14px;
 }
 
 /* ===== МОДАЛЬНОЕ ОКНО (не зависит от родителя) ===== */

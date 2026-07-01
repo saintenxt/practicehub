@@ -31,5 +31,4 @@ function markNotificationAsRead (fromUserId, toUserId) {
     const newNotification = notification.map({
         
     })
-    
 }

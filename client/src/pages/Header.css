@@ -12,6 +12,8 @@
   display: flex;
   gap: 50px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .header_list-link {
@@ -31,12 +33,40 @@
   color: #19191B;
 }
 
+/* Правый блок – колокольчик и кнопка рядом */
+.header_right {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* минимальный отступ между колокольчиком и кнопкой */
+}
+
+/* Кнопка-колокольчик (только иконка) */
+.notification_button {
+  background: transparent;
+  border: none;
+  font-size: 24px; /* размер иконки */
+  color: #696871;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification_button:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #19191B;
+}
+
+/* Кнопка «Личный кабинет» (без изменений) */
 .header_button {
   background: #ece9e9;
   color: #19191B;
   border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(5px);
-  padding: 8px 18px;
+  padding: 14px 20px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
@@ -44,8 +74,8 @@
   white-space: nowrap;
   text-decoration: none;
   min-width: 140px;
+  text-align: center;
 }
-
 
 .header_button:hover {
   background: #ddd;

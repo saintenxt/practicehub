@@ -146,7 +146,7 @@ exports.deleteAvatar = async (req, res) => {
       fs.unlinkSync(oldPath);
     }
 
-    const updatedUser = await UserModel.updateUser(userId, { avatar: null });
+    const updatedUser = await UserModel.updateUser(userId, { avatar: '../uploads/photo.png' });
     if (!updatedUser) {
       return res.status(400).json({ error: 'Не удалось удалить аватар' });
     }
