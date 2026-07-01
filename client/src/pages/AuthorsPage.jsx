@@ -4,17 +4,17 @@ const authors = [
     {
         name: 'Мацеевский Артемий',
         nickname: 'artik',
-        photo: `${process.env.PUBLIC_URL}/photos/artik.jpg`
+        photo: `${process.env.PUBLIC_URL}/photos/artik.ppg`
     },
     {
         name: 'Ситников Павел',
         nickname: 'paul',
-        photo: `${process.env.PUBLIC_URL}/photos/paul.jpg`
+        photo: `${process.env.PUBLIC_URL}/photos/paul.png`
     },
     {
         name: 'Пырегов Вячеслав',
         nickname: 'vechi',
-        photo: `${process.env.PUBLIC_URL}/photos/vechi.jpg`
+        photo: `${process.env.PUBLIC_URL}/photos/vechi.png`
     }
 ];
 
