@@ -3,7 +3,7 @@ const router = express.Router();
 const matchController = require('../controllers/matchcontroller'); 
 const { authenticateJWT } = require('../middleware/auth');
 
-router.get('/my', authenticateJWT, matchController.getMyMatches);
+
 router.get('/:game', matchController.getMatchesByGame);
 router.post('/',authenticateJWT, matchController.createMatch);
 router.patch('/:id/status', authenticateJWT, matchController.updateMatchStatus);

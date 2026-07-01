@@ -58,7 +58,7 @@ const ProfilePage = () => {
   const fetchUserMatches = async () => {
     try {
       setMatchesLoading(true);
-      const response = await fetch('/api/matches/my', {
+      const response = await fetch('/api/profile', {
         credentials: 'include'
       });
       const data = await response.json();

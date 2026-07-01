@@ -116,9 +116,9 @@ const handleJoin = async (matchId) => {
           }),
           credentials: 'include'
         });
-        console.log('✅ Сообщение автору отправлено');
+        console.log('Сообщение автору отправлено');
       } catch (msgErr) {
-        console.error('❌ Не удалось отправить сообщение автору:', msgErr);
+        console.error('Не удалось отправить сообщение автору:', msgErr);
       }
     }
 

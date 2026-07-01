@@ -63,7 +63,7 @@ function App() {
         path="/messages/:id"
         element={
           <ProtectedRoute>
-            <MessagePage/>
+            <MessagePage />
           </ProtectedRoute>
         }
         />

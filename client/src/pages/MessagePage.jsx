@@ -11,7 +11,7 @@ function MessagePage() {
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
 
-  // 1. Загружаем список диалогов при монтировании
+  
   useEffect(() => {
     loadConversations();
   }, []);

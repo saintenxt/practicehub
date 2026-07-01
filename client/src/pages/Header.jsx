@@ -10,12 +10,10 @@ function Header() {
   return (
     <header className="shapka">
       <nav className="header_nav">
-        {/* Логотип слева */}
         <Link to="/">
           <img src={logo} width="100" height="50" alt="Logo" />
         </Link>
 
-        {/* Центральное меню */}
         <ul className="header_list">
           <li>
             <Link className={`header_list-link ${isActive('/')}`} to="/">
@@ -28,6 +26,13 @@ function Header() {
             </Link>
           </li>
         </ul>
+
+          <div className="header_right">
+          <Link className="header_button" to="/profile">
+            Личный кабинет
+          </Link>
+        </div>
+
       </nav>
     </header>
   );
