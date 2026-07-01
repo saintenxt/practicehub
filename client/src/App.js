@@ -13,6 +13,7 @@ import './App.css';
 
 function App() {
   return (
+    <div className="app-container">
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
@@ -28,7 +29,7 @@ function App() {
               </>
             </ProtectedRoute>
           }
-        />
+          />
         <Route
           path="/profile"
           element={
@@ -36,7 +37,7 @@ function App() {
               <ProfilePage />
             </ProtectedRoute>
           }
-        />
+          />
         <Route
           path="/match"   
           element={
@@ -47,7 +48,7 @@ function App() {
               </>
             </ProtectedRoute>
           }
-        />
+          />
         <Route
           path="/matches/:game"
           element={
@@ -55,11 +56,12 @@ function App() {
               <Game />
             </ProtectedRoute>
           }
-        />
+          />
         <Route path="/" element={<Navigate to="/mainpage" />} />
         <Route path="*" element={<Navigate to="/mainpage" />} />
       </Routes>
     </BrowserRouter>
+  </div>
   );
 }
 
