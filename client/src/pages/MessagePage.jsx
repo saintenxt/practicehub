@@ -16,14 +16,14 @@ function MessagePage() {
     loadConversations();
   }, []);
 
-  // 2. При смене активного чата загружаем историю сообщений
+  
   useEffect(() => {
     if (activeChatId) {
       loadMessages(activeChatId);
     }
   }, [activeChatId]);
 
-  // 3. Загрузка списка диалогов (GET /api/messages/match)
+  
   const loadConversations = async () => {
     try {
       setLoading(true);
@@ -33,7 +33,7 @@ function MessagePage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Ошибка загрузки чатов');
 
-      // Преобразуем ответ в формат для отображения
+      
       const formattedChats = data.conversations.map(conv => ({
         id: conv.userId,
         name: conv.username || 'Неизвестный',
@@ -51,7 +51,7 @@ function MessagePage() {
     }
   };
 
-  // 4. Загрузка сообщений с конкретным пользователем (GET /api/messages/:userId)
+  
   const loadMessages = async (userId) => {
     try {
       const res = await fetch(`/api/messages/${userId}`, {
@@ -60,13 +60,13 @@ function MessagePage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Ошибка загрузки сообщений');
 
-      // Преобразуем сообщения в формат для отображения
+      
       const formattedMessages = data.messages.map(msg => ({
         id: msg.id,
         sender: msg.fromUserId === activeChatId ? 'other' : 'me',
         text: msg.text,
         time: new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        hasFile: false // можно добавить поддержку файлов позже
+        hasFile: false 
       }));
 
       setMessages(prev => ({
@@ -74,7 +74,7 @@ function MessagePage() {
         [userId]: formattedMessages
       }));
 
-      // Помечаем сообщения как прочитанные (PATCH /api/messages/read)
+
       await markMessagesAsRead(userId);
 
     } catch (err) {
@@ -82,7 +82,7 @@ function MessagePage() {
     }
   };
 
-  // 5. Отправка сообщения (POST /api/messages)
+  
   const sendMessage = async () => {
     if (!newMessage.trim() && attachedFiles.length === 0) return;
     if (!activeChatId) return;
@@ -108,7 +108,7 @@ function MessagePage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Ошибка отправки');
 
-      // Добавляем отправленное сообщение в локальное состояние
+      
       const newMsg = {
         id: data.message.id,
         sender: 'me',
@@ -122,7 +122,7 @@ function MessagePage() {
         [activeChatId]: [...(prev[activeChatId] || []), newMsg]
       }));
 
-      // Обновляем последнее сообщение в списке диалогов
+      
       setChats(prevChats => 
         prevChats.map(chat => 
           chat.id === activeChatId 
@@ -137,7 +137,7 @@ function MessagePage() {
     }
   };
 
-  // 6. Пометить сообщения как прочитанные (PATCH /api/messages/read)
+  
   const markMessagesAsRead = async (userId) => {
     try {
       await fetch('/api/messages/read', {
@@ -151,7 +151,7 @@ function MessagePage() {
     }
   };
 
-  // 7. Фильтрация чатов по поиску
+  
   const filteredChats = chats.filter(chat =>
     chat.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -159,7 +159,7 @@ function MessagePage() {
   const activeChat = chats.find(chat => chat.id === activeChatId);
   const chatMessages = activeChatId ? messages[activeChatId] || [] : [];
 
-  // 8. Обработчики событий
+  
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();

@@ -1,6 +1,6 @@
 .message-page {
   background-color: #f0f0f0;
-  height: calc(100vh - 70px); /* если хедер выше/ниже – подправьте цифру */
+  height: calc(100vh - 70px); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -286,7 +286,7 @@
   }
 }
 
-/* Стили для кнопки прикрепления файла */
+
 .attach-button {
   display: flex;
   align-items: center;
@@ -318,14 +318,14 @@
   height: 22px;
 }
 
-/* Стиль для иконки файла в сообщении */
+
 .message-file-icon {
   font-size: 14px;
   margin-top: 4px;
   opacity: 0.7;
 }
 
-/* Обновляем стили chat-input для лучшего размещения кнопки */
+
 .chat-input {
   display: flex;
   padding: 15px 20px;
@@ -365,7 +365,7 @@
   background-color: #ccc;
 }
 
-/* Адаптив для мобильных */
+
 @media (max-width: 768px) {
   .attach-button {
     width: 38px;

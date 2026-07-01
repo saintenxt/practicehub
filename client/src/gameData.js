@@ -1,5 +1,3 @@
-// src/config/gameData.js
-
 import ValorantBg from './photos/valorant3.jpg'; 
 import Cs2Bg from './photos/cs21.jpg';
 import BrawlBg from './photos/brawl5.jpg';

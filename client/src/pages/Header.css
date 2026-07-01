@@ -1,7 +1,7 @@
-/* Базовые стили (для больших экранов) */
+
 .shapka {
   padding: 10px 100px;
-  background: #fff; /* или ваш фон */
+  background: #fff; 
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* разрешаем перенос на мобильных */
+  flex-wrap: wrap; 
   gap: 15px;
 }
 
@@ -38,7 +38,7 @@
   color: #19191B;
 }
 
-/* Кнопка (если она есть в шапке) */
+
 .header_button {
   background: #ece9e9;
   color: #19191B;
@@ -59,41 +59,41 @@
   background: #ddd;
 }
 
-/* ===== АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ===== */
+
 @media (max-width: 768px) {
   .shapka {
-    padding: 10px 20px; /* уменьшаем боковые отступы */
+    padding: 10px 20px; 
   }
 
   .header_nav {
-    flex-direction: column; /* все элементы в столбик */
-    align-items: stretch;   /* растягиваем на всю ширину */
+    flex-direction: column; 
+    align-items: stretch;   
     gap: 10px;
   }
 
-  /* Логотип по центру */
+  
   .header_nav > a {
     align-self: center;
   }
 
   .header_nav > a img {
-    width: 80px;   /* уменьшаем логотип */
+    width: 80px;   
     height: auto;
   }
 
   .header_list {
-    flex-direction: column; /* ссылки в столбик */
+    flex-direction: column; 
     gap: 12px;
     align-items: center;
     width: 100%;
   }
 
   .header_list-link {
-    font-size: 18px; /* чуть крупнее для удобства тыка */
+    font-size: 18px; 
     padding: 8px 0;
   }
 
-  /* Кнопка (если есть) – растягиваем на всю ширину */
+  
   .header_button {
     width: 100%;
     min-width: unset;
@@ -102,7 +102,7 @@
   }
 }
 
-/* Для очень маленьких экранов (≤ 480px) можно ещё уменьшить */
+
 @media (max-width: 480px) {
   .shapka {
     padding: 8px 12px;

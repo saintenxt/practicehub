@@ -33,7 +33,6 @@ const ProfilePage = () => {
       setLoading(true);
       const response = await fetch('/api/profile', { credentials: 'include' });
       const data = await response.json();
-      console.log('📦 Полный ответ сервера:', data);
 
       if (!response.ok) {
         throw new Error(data.error || 'Ошибка загрузки профиля');
@@ -47,7 +46,7 @@ const ProfilePage = () => {
         setError('Неожиданный ответ: ' + JSON.stringify(data));
       }
     } catch (err) {
-      console.error('❌ Ошибка:', err);
+      console.error('Ошибка:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -228,7 +227,7 @@ const ProfilePage = () => {
           marginBottom: '30px',
           flexWrap: 'wrap'
         }}>
-          {/* Блок аватара */}
+
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -302,7 +301,7 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Остальная информация о пользователе */}
+
           <div style={{
             flex: 1,
             display: 'flex',
@@ -567,7 +566,7 @@ const ProfilePage = () => {
           </div>
         )}
 
-        {/* ===== БЛОК ЗАПЛАНИРОВАННЫХ МАТЧЕЙ (изменён) ===== */}
+
         <div style={{
           background: '#E4E4E5',
           borderRadius: '16px',
@@ -575,7 +574,7 @@ const ProfilePage = () => {
           boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
         }}>
           <h3 style={{ color: '#3C3C3C', fontSize: '24px', marginBottom: '20px', paddingBottom: '15px', borderBottom: '3px solid #BEBEBE' }}>
-            🎮 Запланированные матчи
+            Запланированные матчи
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             {matchesLoading ? (
@@ -618,7 +617,7 @@ const ProfilePage = () => {
                   </div>
                   <p style={{ margin: 0, color: '#555' }}>{match.description}</p>
                   <div style={{ display: 'flex', gap: '20px', fontSize: '14px', color: '#777' }}>
-                    <span>📅 {new Date(match.date).toLocaleString('ru-RU', {
+                    <span> {new Date(match.date).toLocaleString('ru-RU', {
                       day: '2-digit',
                       month: '2-digit',
                       year: 'numeric',

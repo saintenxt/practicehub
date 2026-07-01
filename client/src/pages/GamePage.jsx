@@ -186,7 +186,6 @@ const handleJoin = async (matchId) => {
                   <h3>{match.title}</h3>
                   <p>{match.description}</p>
 
-                  {/* НОВАЯ СТРУКТУРА МЕТА-ДАННЫХ */}
                   <div className="match-meta">
                     <span className="meta-item">
                       📅 {new Date(match.date).toLocaleString('ru-RU', {
@@ -216,7 +215,7 @@ const handleJoin = async (matchId) => {
                           Отписаться
                         </button>
                       
-                        <Link to={`/messages/${match.userId}`} className="chat-btn">
+                        <Link to={`/${match.userId}`} className="chat-btn">
                           Чат с автором
                         </Link>
                         </>
