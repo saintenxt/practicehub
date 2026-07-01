@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 import logo from '../photos/logo.png';
@@ -6,6 +6,18 @@ import logo from '../photos/logo.png';
 function Header() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path ? 'active' : '';
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/profile', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.user) setUserId(data.user.id);
+      })
+      .catch(() => {});
+  }, []);
+
+  const messagesPath = userId ? `/messages/${userId}` : '/messages';
 
   return (
     <header className="shapka">
@@ -21,18 +33,17 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link className={`header_list-link ${isActive('/messages')}`} to="/messages">
+            <Link className={`header_list-link ${isActive(messagesPath)}`} to={messagesPath}>
               Сообщения
             </Link>
           </li>
         </ul>
 
-          <div className="header_right">
+        <div className="header_right">
           <Link className="header_button" to="/profile">
             Личный кабинет
           </Link>
         </div>
-
       </nav>
     </header>
   );

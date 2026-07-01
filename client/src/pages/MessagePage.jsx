@@ -25,10 +25,10 @@ function MessagePage() {
   }, [activeChatId]);
 
   
-  const loadConversations = async () => {
+  const loadConversations = async (userId) => {
     try {
       setLoading(true);
-      const res = await fetch('/api/messages', {
+      const res = await fetch(`/api/messages/${userId}`, {
         credentials: 'include'
       });
       const data = await res.json();
