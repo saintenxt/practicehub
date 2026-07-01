@@ -195,7 +195,7 @@ function GamePage() {
                           Отписаться
                         </button>
                       
-                        <Link to={`/match/${match.userId}`} className="chat-btn">
+                        <Link to={`/messages/${match.userId}`} className="chat-btn">
                           Чат с автором
                         </Link>
                         </>

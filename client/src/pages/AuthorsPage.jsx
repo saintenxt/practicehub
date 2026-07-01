@@ -88,6 +88,6 @@ return (
         </div>
     </>
 );
-};
+
 
 export default AuthorsPage;

@@ -12,6 +12,7 @@ import MessagePage from './pages/MessagePage';
 import './App.css';
 import AuthorsPage from './pages/AuthorsPage';
 
+
 function App() {
   return (
     <div className="app-container">
@@ -63,6 +64,14 @@ function App() {
         element={
           <ProtectedRoute>
             <MessagePage/>
+          </ProtectedRoute>
+        }
+        />
+        <Route 
+        path="/authours"
+        element={
+          <ProtectedRoute>
+            <AuthorsPage />
           </ProtectedRoute>
         }
         />
