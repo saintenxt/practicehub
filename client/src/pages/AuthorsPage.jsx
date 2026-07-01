@@ -1,6 +1,6 @@
 import Header from './Header';
 import artikPhoto from '../photos/artik.jpg';
-import paulPhoto from '../photos/paul.jpg';
+import paulPhoto from '../photos/paul 2.jpg';
 import vechiPhoto from '../photos/vechi.jpg';
 
 
@@ -22,7 +22,7 @@ const authors = [
     }
 ];
 
-function AuthorsPage(){
+function AuthorsPage() {
     return (
         <>
             <Header />
