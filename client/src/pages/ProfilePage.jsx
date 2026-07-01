@@ -16,36 +16,58 @@ const ProfilePage = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // 👇 Новые состояния для матчей
+  const [userMatches, setUserMatches] = useState([]);
+  const [matchesLoading, setMatchesLoading] = useState(true);
+
   useEffect(() => {
     fetchProfile();
+    fetchUserMatches(); // загружаем матчи параллельно
   }, []);
 
-const fetchProfile = async () => {
-  try {
-    setLoading(true);
-    const response = await fetch('/api/profile', { credentials: 'include' });
-    const data = await response.json();
-    console.log('📦 Полный ответ сервера:', data); // <-- увидим всё
+  const fetchProfile = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/profile', { credentials: 'include' });
+      const data = await response.json();
+      console.log('📦 Полный ответ сервера:', data);
 
-    if (!response.ok) {
-      throw new Error(data.error || 'Ошибка загрузки профиля');
-    }
+      if (!response.ok) {
+        throw new Error(data.error || 'Ошибка загрузки профиля');
+      }
 
-    if (data.user) {
-      setUser(data.user);
-      setEditUsername(data.user.username || '');
-      setEditEmail(data.user.email || '');
-    } else {
-      // Если сервер вернул что-то другое (debug или error)
-      setError('Неожиданный ответ: ' + JSON.stringify(data));
+      if (data.user) {
+        setUser(data.user);
+        setEditUsername(data.user.username || '');
+        setEditEmail(data.user.email || '');
+      } else {
+        setError('Неожиданный ответ: ' + JSON.stringify(data));
+      }
+    } catch (err) {
+      console.error('❌ Ошибка:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error('❌ Ошибка:', err);
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
+
+  // 👇 Новая функция загрузки матчей пользователя
+  const fetchUserMatches = async () => {
+    try {
+      setMatchesLoading(true);
+      const response = await fetch('/api/user/matches', {
+        credentials: 'include'
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Ошибка загрузки матчей');
+      setUserMatches(data.matches || []);
+    } catch (err) {
+      console.error('Ошибка загрузки матчей:', err);
+      setUserMatches([]);
+    } finally {
+      setMatchesLoading(false);
+    }
+  };
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
@@ -214,7 +236,7 @@ const fetchProfile = async () => {
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               ) : (
-                <span>{initial}</span>   // 🟢 кружок с инициалом
+                <span>{initial}</span>
               )}
             </div>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -259,7 +281,7 @@ const fetchProfile = async () => {
             </div>
           </div>
 
-          {/* Остальная информация о пользователе (без изменений) */}
+          {/* Остальная информация о пользователе */}
           <div style={{
             flex: 1,
             display: 'flex',
@@ -510,6 +532,7 @@ const fetchProfile = async () => {
           </div>
         )}
 
+        {/* ===== БЛОК ЗАПЛАНИРОВАННЫХ МАТЧЕЙ (изменён) ===== */}
         <div style={{
           background: '#E4E4E5',
           borderRadius: '16px',
@@ -520,20 +543,59 @@ const fetchProfile = async () => {
             🎮 Запланированные матчи
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} style={{
+            {matchesLoading ? (
+              <div style={{ textAlign: 'center', color: '#7A7A7A' }}>Загрузка матчей...</div>
+            ) : userMatches.length === 0 ? (
+              <div style={{
                 background: 'white',
                 padding: '20px',
                 borderRadius: '12px',
                 border: '2px dashed #BEBEBE',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '60px'
+                textAlign: 'center',
+                color: '#7A7A7A'
               }}>
-                <span style={{ color: '#BEBEBE', fontSize: '16px', fontWeight: 500 }}>Матч #{num}</span>
+                У вас пока нет запланированных матчей.
               </div>
-            ))}
+            ) : (
+              userMatches.map((match) => (
+                <div key={match.id} style={{
+                  background: 'white',
+                  padding: '20px',
+                  borderRadius: '12px',
+                  border: '2px solid #D0D0D0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: 'bold', fontSize: '18px', color: '#3C3C3C' }}>
+                      {match.title}
+                    </span>
+                    <span style={{
+                      background: '#7A7A7A',
+                      color: 'white',
+                      padding: '4px 12px',
+                      borderRadius: '20px',
+                      fontSize: '14px'
+                    }}>
+                      {match.game ? match.game.charAt(0).toUpperCase() + match.game.slice(1) : 'Игра'}
+                    </span>
+                  </div>
+                  <p style={{ margin: 0, color: '#555' }}>{match.description}</p>
+                  <div style={{ display: 'flex', gap: '20px', fontSize: '14px', color: '#777' }}>
+                    <span>📅 {new Date(match.date).toLocaleString('ru-RU', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}</span>
+                    <span>👤 {match.author || 'Автор'}</span>
+                    <span>👥 {match.players?.length || 0}</span>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
