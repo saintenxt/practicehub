@@ -1,7 +1,6 @@
-import React from 'react';
-import './Companies.css';
+import tgIcon from '../photos/tg.png';
 
-function Companies() {
+const Companies = () => {
   return (
     <section className="companies">
       <div className="companies_container">
@@ -10,12 +9,33 @@ function Companies() {
             <a href="/authors" className="inform">Дополнительная информация</a>
           </li>
           <li className="companies_company">
-            <a href="/" className="inform">Ссылки</a>
+            <a
+              href="https://t.me/practice_hub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inform"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}
+            >
+              <img
+                src={tgIcon}
+                alt="Telegram"
+                style={{
+                  width: '24px',
+                  height: '24px',
+                  objectFit: 'contain'
+                }}
+              />
+              Telegram
+            </a>
           </li>
         </ul>
       </div>
     </section>
   );
-}
+};
 
 export default Companies;

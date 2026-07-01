@@ -10,14 +10,14 @@ const authors = [
         nickname: 'artik',
         photo: artikPhoto
     },
-    {
+    {  
         name: 'Ситников Павел',
         nickname: 'paul',
         photo: paulPhoto
     },
     {
         name: 'Пырегов Вячеслав',
-        nickname: 'vechi',
+        nickname: 'vechislav',
         photo: vechiPhoto
     }
 ];
