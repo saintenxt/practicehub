@@ -1,11 +1,16 @@
+/* Базовые стили (для больших экранов) */
 .shapka {
   padding: 10px 100px;
+  background: #fff; /* или ваш фон */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .header_nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* разрешаем перенос на мобильных */
+  gap: 15px;
 }
 
 .header_list {
@@ -33,8 +38,7 @@
   color: #19191B;
 }
 
-
-/* Кнопка «Личный кабинет» (без изменений) */
+/* Кнопка (если она есть в шапке) */
 .header_button {
   background: #ece9e9;
   color: #19191B;
@@ -53,4 +57,57 @@
 
 .header_button:hover {
   background: #ddd;
+}
+
+/* ===== АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ ===== */
+@media (max-width: 768px) {
+  .shapka {
+    padding: 10px 20px; /* уменьшаем боковые отступы */
+  }
+
+  .header_nav {
+    flex-direction: column; /* все элементы в столбик */
+    align-items: stretch;   /* растягиваем на всю ширину */
+    gap: 10px;
+  }
+
+  /* Логотип по центру */
+  .header_nav > a {
+    align-self: center;
+  }
+
+  .header_nav > a img {
+    width: 80px;   /* уменьшаем логотип */
+    height: auto;
+  }
+
+  .header_list {
+    flex-direction: column; /* ссылки в столбик */
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .header_list-link {
+    font-size: 18px; /* чуть крупнее для удобства тыка */
+    padding: 8px 0;
+  }
+
+  /* Кнопка (если есть) – растягиваем на всю ширину */
+  .header_button {
+    width: 100%;
+    min-width: unset;
+    padding: 12px;
+    text-align: center;
+  }
+}
+
+/* Для очень маленьких экранов (≤ 480px) можно ещё уменьшить */
+@media (max-width: 480px) {
+  .shapka {
+    padding: 8px 12px;
+  }
+  .header_list-link {
+    font-size: 16px;
+  }
 }
