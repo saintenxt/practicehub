@@ -20,38 +20,45 @@ const ProfilePage = () => {
     fetchProfile();
   }, []);
 
-const fetchProfile = async () => {
-  try {
-    setLoading(true);
-    const response = await fetch('/api/profile', { credentials: 'include' });
-    const data = await response.json();
-    console.log('📦 Полный ответ сервера:', data); // <-- увидим всё
+  // ---- Запросы к API ----
 
-    if (!response.ok) {
-      throw new Error(data.error || 'Ошибка загрузки профиля');
+  const fetchProfile = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/profile', { credentials: 'include' });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Ошибка загрузки профиля');
+      if (data.user) {
+        setUser(data.user);
+        setEditUsername(data.user.username || '');
+        setEditEmail(data.user.email || '');
+      } else {
+        setError('Неожиданный ответ: ' + JSON.stringify(data));
+      }
+    } catch (err) {
+      console.error('Ошибка:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (data.user) {
-      setUser(data.user);
-      setEditUsername(data.user.username || '');
-      setEditEmail(data.user.email || '');
-    } else {
-      // Если сервер вернул что-то другое (debug или error)
-      setError('Неожиданный ответ: ' + JSON.stringify(data));
+  const fetchUserMatches = async () => {
+    try {
+      setMatchesLoading(true);
+      const response = await fetch('/api/matches/my', { credentials: 'include' });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Ошибка загрузки матчей');
+      setUserMatches(data.matches || []);
+    } catch (err) {
+      console.error('Ошибка загрузки матчей:', err);
+      setUserMatches([]);
+    } finally {
+      setMatchesLoading(false);
     }
-<<<<<<< HEAD
   };
 
   
-=======
-  } catch (err) {
-    console.error('❌ Ошибка:', err);
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
->>>>>>> b058474eedd427ee1ba60130505430c85b3fd000
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
