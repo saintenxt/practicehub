@@ -39,11 +39,6 @@ const fetchProfile = async () => {
       // Если сервер вернул что-то другое (debug или error)
       setError('Неожиданный ответ: ' + JSON.stringify(data));
     }
-<<<<<<< HEAD
-  };
-
-  
-=======
   } catch (err) {
     console.error('❌ Ошибка:', err);
     setError(err.message);
@@ -51,7 +46,6 @@ const fetchProfile = async () => {
     setLoading(false);
   }
 };
->>>>>>> b058474eedd427ee1ba60130505430c85b3fd000
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
