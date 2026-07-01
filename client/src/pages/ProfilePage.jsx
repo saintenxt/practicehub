@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../pages/Header';
 
-
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,26 +17,25 @@ const ProfilePage = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  
   const [userMatches, setUserMatches] = useState([]);
   const [matchesLoading, setMatchesLoading] = useState(true);
-  
+
   const navigate = useNavigate();
+
+  // Загрузка профиля и матчей при монтировании
   useEffect(() => {
     fetchProfile();
-    fetchUserMatches(); 
+    fetchUserMatches();
   }, []);
+
+  // ---- Запросы к API ----
 
   const fetchProfile = async () => {
     try {
       setLoading(true);
       const response = await fetch('/api/profile', { credentials: 'include' });
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Ошибка загрузки профиля');
-      }
-
+      if (!response.ok) throw new Error(data.error || 'Ошибка загрузки профиля');
       if (data.user) {
         setUser(data.user);
         setEditUsername(data.user.username || '');
@@ -53,13 +51,10 @@ const ProfilePage = () => {
     }
   };
 
-  
   const fetchUserMatches = async () => {
     try {
       setMatchesLoading(true);
-      const response = await fetch('/api/matches/my', {
-        credentials: 'include'
-      });
+      const response = await fetch('/api/matches/my', { credentials: 'include' });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Ошибка загрузки матчей');
       setUserMatches(data.matches || []);
@@ -70,6 +65,8 @@ const ProfilePage = () => {
       setMatchesLoading(false);
     }
   };
+
+  // ---- Обработчики профиля ----
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
@@ -136,10 +133,8 @@ const ProfilePage = () => {
       setTimeout(() => setError(''), 3000);
       return;
     }
-
     const formData = new FormData();
     formData.append('avatar', file);
-
     try {
       const response = await fetch('/api/avatar', {
         method: 'POST',
@@ -179,7 +174,7 @@ const ProfilePage = () => {
     }
   };
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     try {
       const response = await fetch('/api/logout', {
         method: 'POST',
@@ -189,13 +184,58 @@ const ProfilePage = () => {
       if (!response.ok) throw new Error(data.error || 'Ошибка выхода');
       setSuccess('Вы вышли');
       setTimeout(() => setSuccess(''), 3000);
-
       navigate('/login');
     } catch (err) {
       setError(err.message);
       setTimeout(() => setError(''), 3000);
     }
   };
+
+  // ---- Управление матчами (из профиля) ----
+
+  const handleDeleteMatch = async (matchId) => {
+    if (!confirm('Удалить объявление?')) return;
+    try {
+      const res = await fetch(`/api/matches/${matchId}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+      if (!res.ok) throw new Error('Ошибка удаления');
+      // Обновляем список локально
+      setUserMatches(prev => prev.filter(m => m.id !== matchId));
+      setSuccess('Объявление удалено');
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      setError(err.message);
+      setTimeout(() => setError(''), 3000);
+    }
+  };
+
+  const handleLeaveMatch = async (matchId) => {
+    try {
+      const res = await fetch(`/api/matches/${matchId}/leave`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка');
+      // Обновляем конкретный матч в списке
+      setUserMatches(prev =>
+        prev.map(m => (m.id === matchId ? data.match : m))
+      );
+      setSuccess('Вы отписались от матча');
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      setError(err.message);
+      setTimeout(() => setError(''), 3000);
+    }
+  };
+
+  // Разделяем матчи на свои и чужие
+  const myMatches = userMatches.filter(m => m.userId === user?.id);
+  const joinedMatches = userMatches.filter(m => m.userId !== user?.id);
+
+  // ---- Рендеринг ----
 
   if (loading) return <div style={{ textAlign: 'center', marginTop: 50 }}>Загрузка...</div>;
   if (!user) return <div style={{ textAlign: 'center', marginTop: 50 }}>Пользователь не найден</div>;
@@ -206,6 +246,7 @@ const ProfilePage = () => {
     <>
       <Header />
       <div style={{ maxWidth: 1200, margin: '40px auto', padding: '0 20px' }}>
+        {/* Сообщения об ошибках/успехе */}
         {error && (
           <div style={{ background: '#f8d7da', color: '#721c24', padding: '12px', borderRadius: 8, marginBottom: 20 }}>
             {error}
@@ -217,6 +258,7 @@ const ProfilePage = () => {
           </div>
         )}
 
+        {/* Карточка профиля */}
         <div style={{
           display: 'flex',
           gap: '40px',
@@ -227,7 +269,7 @@ const ProfilePage = () => {
           marginBottom: '30px',
           flexWrap: 'wrap'
         }}>
-
+          {/* Аватар */}
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -301,7 +343,7 @@ const ProfilePage = () => {
             </div>
           </div>
 
-
+          {/* Информация и редактирование */}
           <div style={{
             flex: 1,
             display: 'flex',
@@ -334,49 +376,49 @@ const ProfilePage = () => {
                   <span style={{ color: '#3C3C3C' }}>{user?.email}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginTop: '10px' }}>
-                <button
-                  onClick={() => setEditMode(true)}
-                  style={{
-                    padding: '12px 30px',
-                    background: '#949494',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Редактировать профиль
-                </button>
-                <button
-                  onClick={() => setShowPasswordForm(!showPasswordForm)}
-                  style={{
-                    padding: '12px 30px',
-                    background: '#7A7A7A',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {showPasswordForm ? 'Отмена' : 'Сменить пароль'}
-                </button>
-                <button
-                  onClick={handleLogout}
-                  style={{
-                    padding: '12px 30px',
-                    background: '#d9534f',   
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Выйти
-                </button>
-              </div>
+                  <button
+                    onClick={() => setEditMode(true)}
+                    style={{
+                      padding: '12px 30px',
+                      background: '#949494',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Редактировать профиль
+                  </button>
+                  <button
+                    onClick={() => setShowPasswordForm(!showPasswordForm)}
+                    style={{
+                      padding: '12px 30px',
+                      background: '#7A7A7A',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {showPasswordForm ? 'Отмена' : 'Сменить пароль'}
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    style={{
+                      padding: '12px 30px',
+                      background: '#d9534f',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Выйти
+                  </button>
+                </div>
               </>
             ) : (
               <form onSubmit={handleUpdateProfile}>
@@ -458,6 +500,7 @@ const ProfilePage = () => {
           </div>
         </div>
 
+        {/* Форма смены пароля */}
         {showPasswordForm && (
           <div style={{
             background: '#E4E4E5',
@@ -566,7 +609,7 @@ const ProfilePage = () => {
           </div>
         )}
 
-
+        {/* Список матчей с разделением */}
         <div style={{
           background: '#E4E4E5',
           borderRadius: '16px',
@@ -574,66 +617,155 @@ const ProfilePage = () => {
           boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
         }}>
           <h3 style={{ color: '#3C3C3C', fontSize: '24px', marginBottom: '20px', paddingBottom: '15px', borderBottom: '3px solid #BEBEBE' }}>
-            Запланированные матчи
+            Мои матчи
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {matchesLoading ? (
-              <div style={{ textAlign: 'center', color: '#7A7A7A' }}>Загрузка матчей...</div>
-            ) : userMatches.length === 0 ? (
-              <div style={{
-                background: 'white',
-                padding: '20px',
-                borderRadius: '12px',
-                border: '2px dashed #BEBEBE',
-                textAlign: 'center',
-                color: '#7A7A7A'
-              }}>
-                У вас пока нет запланированных матчей.
-              </div>
-            ) : (
-              userMatches.map((match) => (
-                <div key={match.id} style={{
+
+          {matchesLoading ? (
+            <div style={{ textAlign: 'center', color: '#7A7A7A' }}>Загрузка матчей...</div>
+          ) : (
+            <>
+              {/* Мои объявления */}
+              <h4 style={{ margin: '20px 0 10px', color: '#545454' }}>📌 Мои объявления</h4>
+              {myMatches.length === 0 ? (
+                <div style={{
                   background: 'white',
                   padding: '20px',
                   borderRadius: '12px',
-                  border: '2px solid #D0D0D0',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '8px'
+                  border: '2px dashed #BEBEBE',
+                  textAlign: 'center',
+                  color: '#7A7A7A',
+                  marginBottom: '20px'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontWeight: 'bold', fontSize: '18px', color: '#3C3C3C' }}>
-                      {match.title}
-                    </span>
-                    <span style={{
-                      background: '#7A7A7A',
-                      color: 'white',
-                      padding: '4px 12px',
-                      borderRadius: '20px',
-                      fontSize: '14px'
-                    }}>
-                      {match.game ? match.game.charAt(0).toUpperCase() + match.game.slice(1) : 'Игра'}
-                    </span>
-                  </div>
-                  <p style={{ margin: 0, color: '#555' }}>{match.description}</p>
-                  <div style={{ display: 'flex', gap: '20px', fontSize: '14px', color: '#777' }}>
-                    <span> {new Date(match.date).toLocaleString('ru-RU', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}</span>
-                    <span>👤 {match.author || 'Автор'}</span>
-                    <span>👥 {match.players?.length || 0}</span>
-                  </div>
+                  Вы ещё не создали ни одного объявления.
                 </div>
-              ))
-            )}
-          </div>
+              ) : (
+                myMatches.map(match => (
+                  <MatchCard
+                    key={match.id}
+                    match={match}
+                    isAuthor={true}
+                    onDelete={handleDeleteMatch}
+                  />
+                ))
+              )}
+
+              {/* Мои записи */}
+              <h4 style={{ margin: '20px 0 10px', color: '#545454' }}>📝 Матчи, на которые я записан</h4>
+              {joinedMatches.length === 0 ? (
+                <div style={{
+                  background: 'white',
+                  padding: '20px',
+                  borderRadius: '12px',
+                  border: '2px dashed #BEBEBE',
+                  textAlign: 'center',
+                  color: '#7A7A7A'
+                }}>
+                  Вы ещё не записаны ни на один матч.
+                </div>
+              ) : (
+                joinedMatches.map(match => (
+                  <MatchCard
+                    key={match.id}
+                    match={match}
+                    isAuthor={false}
+                    onLeave={handleLeaveMatch}
+                  />
+                ))
+              )}
+            </>
+          )}
         </div>
       </div>
     </>
+  );
+};
+
+// ---- Компонент карточки матча (внутри того же файла) ----
+
+const MatchCard = ({ match, isAuthor, onDelete, onLeave }) => {
+  return (
+    <div style={{
+      background: 'white',
+      padding: '20px',
+      borderRadius: '12px',
+      border: '2px solid #D0D0D0',
+      marginBottom: '15px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px'
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{ fontWeight: 'bold', fontSize: '18px', color: '#3C3C3C' }}>
+          {match.title}
+        </span>
+        <span style={{
+          background: '#7A7A7A',
+          color: 'white',
+          padding: '4px 12px',
+          borderRadius: '20px',
+          fontSize: '14px'
+        }}>
+          {match.game ? match.game.charAt(0).toUpperCase() + match.game.slice(1) : 'Игра'}
+        </span>
+      </div>
+      <p style={{ margin: 0, color: '#555' }}>{match.description}</p>
+      <div style={{ display: 'flex', gap: '20px', fontSize: '14px', color: '#777', flexWrap: 'wrap' }}>
+        <span>📅 {new Date(match.date).toLocaleString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })}</span>
+        <span>👤 {match.author || 'Автор'}</span>
+        <span>👥 {match.players?.length || 0}</span>
+        <span style={{
+          background: match.status === 'open' ? '#d4edda' : '#f8d7da',
+          color: match.status === 'open' ? '#155724' : '#721c24',
+          padding: '2px 10px',
+          borderRadius: '12px',
+          fontSize: '12px'
+        }}>
+          {match.status === 'open' ? 'Открыто' : 'Закрыто'}
+        </span>
+      </div>
+      {/* Кнопки действий */}
+      {isAuthor ? (
+        <button
+          onClick={() => onDelete(match.id)}
+          style={{
+            alignSelf: 'flex-start',
+            padding: '8px 20px',
+            background: '#d9534f',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '14px',
+            cursor: 'pointer',
+            marginTop: '5px'
+          }}
+        >
+          Удалить объявление
+        </button>
+      ) : (
+        <button
+          onClick={() => onLeave(match.id)}
+          style={{
+            alignSelf: 'flex-start',
+            padding: '8px 20px',
+            background: '#f0ad4e',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '14px',
+            cursor: 'pointer',
+            marginTop: '5px'
+          }}
+        >
+          Отписаться
+        </button>
+      )}
+    </div>
   );
 };
 

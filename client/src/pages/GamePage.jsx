@@ -5,7 +5,7 @@ import Header from './Header';
 import { gameData } from '../gameData';
 
 function GamePage() {
-  const { game } = useParams(); 
+  const { game } = useParams();
   const gameInfo = gameData[game] || null;
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,6 @@ function GamePage() {
   });
   const [currentUser, setCurrentUser] = useState(null);
 
-  
   const gameTitle = game.charAt(0).toUpperCase() + game.slice(1);
 
   useEffect(() => {
@@ -70,12 +69,12 @@ function GamePage() {
     }
     const thisDate = new Date(date);
     if (thisDate < new Date()) {
-      alert('Дата должна быть актуальной')
+      alert('Дата должна быть актуальной');
       return;
     }
-
     if (thisDate > new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)) {
       alert('Дата не позднее чем через год');
+      return;
     }
     try {
       const response = await fetch('/api/matches', {
@@ -101,20 +100,19 @@ function GamePage() {
     }
   };
 
-const handleJoin = async (matchId) => {
-  try {
-    const res = await fetch(`/api/matches/${matchId}/join`, {
-      method: 'POST',
-      credentials: 'include'
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Ошибка');
+  // Обработчик "Записаться" – только запись, без перехода
+  const handleJoin = async (matchId) => {
+    try {
+      const res = await fetch(`/api/matches/${matchId}/join`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка');
 
-
-    const match = matches.find(m => m.id === matchId);
-    if (match && currentUser) {
-
-      try {
+      const match = matches.find(m => m.id === matchId);
+      if (match && currentUser) {
+        // Отправляем сообщение автору
         await fetch('/api/messages/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -125,18 +123,16 @@ const handleJoin = async (matchId) => {
           credentials: 'include'
         });
         console.log('Сообщение автору отправлено');
-      } catch (msgErr) {
-        console.error('Не удалось отправить сообщение автору:', msgErr);
       }
-    }
 
-    setMatches(prev =>
-      prev.map(m => (m.id === matchId ? data.match : m))
-    );
-  } catch (err) {
-    alert(err.message);
-  }
-};
+      // Обновляем состояние матчей (показываем, что пользователь записан)
+      setMatches(prev =>
+        prev.map(m => (m.id === matchId ? data.match : m))
+      );
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   const handleLeave = async (matchId) => {
     try {
@@ -168,16 +164,14 @@ const handleJoin = async (matchId) => {
     }
   };
 
-
   if (loading) return <div className="loading">Загрузка...</div>;
 
   const today = new Date();
   const minDay = today.toISOString().slice(0, 16);
   const maxDay = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
 
-
   return (
-    <div className="game-page" style={{backgroundImage: `url(${gameInfo.backgroundImage})`}}>
+    <div className="game-page" style={{ backgroundImage: `url(${gameInfo.backgroundImage})` }}>
       <Header />
       <div className="valorant-content">
         <h1>{gameInfo.title}</h1>
@@ -216,27 +210,44 @@ const handleJoin = async (matchId) => {
                     <span className="meta-item">👥 {match.players?.length || 0}</span>
                   </div>
 
+                  {/* Блок кнопок для не-автора */}
                   {currentUser && !isAuthor && (
                     <>
                       {!isJoined ? (
+                        // Если не записан – только кнопка "Записаться"
                         <button className="join-btn" onClick={() => handleJoin(match.id)}>
                           Записаться
                         </button>
                       ) : (
+                        // Если записан – кнопки "Отписаться" и "Чат с автором"
                         <>
-                        <button className="leave-btn" onClick={() => handleLeave(match.id)}>
-                          Отписаться
-                        </button>
-                      
-                        <Link to={`/messages/${currentUser.id}`} className="chat-btn">
-                          Чат с автором
-                        </Link>
+                          <button className="leave-btn" onClick={() => handleLeave(match.id)}>
+                            Отписаться
+                          </button>
+                          <Link
+                            to={`/messages/${match.userId}`}
+                            state={{ authorName: match.author }}
+                            className="chat-btn"
+                          >
+                            Чат с автором
+                          </Link>
                         </>
-                      )} 
-                    
+                      )}
                     </>
                   )}
-                    
+
+                  {/* Блок кнопок для автора – "Чат с участником" (если есть участники) */}
+                  {isAuthor && match.players && match.players.length > 0 && (
+                    <Link
+                      to={`/messages/${match.players[0]}`}
+                      state={{ authorName: 'Участник' }}
+                      className="chat-btn"
+                    >
+                      Чат с участником
+                    </Link>
+                  )}
+
+                  {/* Кнопка удаления – только для автора */}
                   {isAuthor && (
                     <button className="delete-btn" onClick={() => handleDelete(match.id)}>
                       Удалить
@@ -253,6 +264,7 @@ const handleJoin = async (matchId) => {
         </button>
       </div>
 
+      {/* Модальное окно создания объявления */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
