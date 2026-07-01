@@ -22,16 +22,6 @@
     "players": []
   },
   {
-    "id": "1782807516521",
-    "userId": "1782803187779",
-    "game": "valorant",
-    "title": "23",
-    "description": "123",
-    "date": "2026-06-30T10:20:00.000Z",
-    "status": "open",
-    "players": []
-  },
-  {
     "id": "1782810064507",
     "userId": "1782803187779",
     "game": "cs2",
@@ -48,6 +38,16 @@
     "title": "52",
     "description": "спб",
     "date": "2026-07-04T13:00:00.000Z",
+    "status": "open",
+    "players": []
+  },
+  {
+    "id": "1782812370972",
+    "userId": "1782803187779",
+    "game": "valorant",
+    "title": "Valorant pracc",
+    "description": "ищу immo3+ only ",
+    "date": "2026-06-28T13:43:00.000Z",
     "status": "open",
     "players": []
   }

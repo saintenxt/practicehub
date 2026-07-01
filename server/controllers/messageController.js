@@ -1,42 +1,41 @@
-const { json } = require('express');
 const messageModel = require('../models/messageModel');
 const userModel = require('../models/usermod');
 
 exports.sendMessage = (req, res) => {
-    const {toUserId, text} = req.body;
+    const { toUserId, text } = req.body;
     const fromUserId = req.user.id;
 
     if (!toUserId || !text) {
-        return json.status(400).json({error: 'не указан получатель или текст'});
+        return res.status(400).json({ error: 'не указан получатель или текст' });
     }
 
     const recipient = userModel.findUserByID(toUserId);
     if (!recipient) {
-        return json.status(400).json({error: 'не найден получатель'});
+        return res.status(400).json({ error: 'не найден получатель' });
     }
 
     const message = messageModel.sendMessage(fromUserId, toUserId, text);
-    return res.status(201).json({message});
+    return res.status(201).json({ message });
 };
 
 exports.getConversation = (req, res) => {
-    const {userId} = req.params;
+    const { userId } = req.params;
     const currentUserId = req.user.id;
 
     const otherUser = userModel.findUserByID(userId);
     if (!otherUser) {
-        return json.status(400).json({error: 'Пользователь не найден'});
+        return res.status(400).json({ error: 'Пользователь не найден' });
     }
 
     const messages = messageModel.getConversation(currentUserId, userId);
-    return json({messages, user:otherUser})
+    return res.json({ messages, user: otherUser });
 };
 
 exports.getConversationList = (req, res) => {
     const userId = req.user.id;
-    const conversations = messageModel.getConversationList(usedId);
+    const conversations = messageModel.getConversationList(userId);
 
-    const listOfUsers = conversations.map(conv =>{
+    const listOfUsers = conversations.map(conv => {
         const user = userModel.findUserByID(conv.userId);
         return {
             ...conv,
@@ -48,13 +47,13 @@ exports.getConversationList = (req, res) => {
 };
 
 
-exports.markAsread = (req, res) => {
-    const {fromUserId} = req.body;
+exports.markAsRead = (req, res) => {
+    const { fromUserId } = req.body;
     const toUserId = req.user.id;
     if (!fromUserId) {
-        return json.status(400).json({error: 'пользователь не указан'});
-    };
+        return res.status(400).json({ error: 'пользователь не указан' });
+    }
 
     const updated = messageModel.markMessageAsRead(fromUserId, toUserId);
-    res.json({succes: updated});
-}
+    res.json({ success: updated });
+};

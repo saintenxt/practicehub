@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './ValorantPage.css';
 import Header from './Header';
 import { gameData } from '../gameData';
@@ -24,7 +24,7 @@ function GamePage() {
   useEffect(() => {
     loadMatches();
     fetchCurrentUser();
-  }, [game]); // перезагружаем при смене игры
+  }, [game]);
 
   const fetchCurrentUser = async () => {
     try {
@@ -74,7 +74,7 @@ function GamePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          game: game, // используем название из URL
+          game: game,
           title,
           description,
           date: new Date(date).toISOString()
@@ -139,6 +139,7 @@ function GamePage() {
     }
   };
 
+
   if (loading) return <div className="loading">Загрузка...</div>;
 
   return (
@@ -163,14 +164,24 @@ function GamePage() {
                 <div key={match.id} className="announcement-item">
                   <h3>{match.title}</h3>
                   <p>{match.description}</p>
-                  <p className="match-date">🕒 {new Date(match.date).toLocaleString()}</p>
-                  <p className="match-author">👤 {match.author}</p>
-                  <p className="match-status">
-                    Статус: {match.status === 'open' ? '🟢 Открыто' : '🔴 Закрыто'}
-                  </p>
-                  <p className="match-players">
-                    👥 Записано: {match.players?.length || 0}
-                  </p>
+
+                  {/* НОВАЯ СТРУКТУРА МЕТА-ДАННЫХ */}
+                  <div className="match-meta">
+                    <span className="meta-item">
+                      📅 {new Date(match.date).toLocaleString('ru-RU', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </span>
+                    <span className="meta-item">👤 {match.author}</span>
+                    <span className={`meta-item status ${match.status === 'open' ? 'open' : 'closed'}`}>
+                      {match.status === 'open' ? 'Открыто' : 'Закрыто'}
+                    </span>
+                    <span className="meta-item">👥 {match.players?.length || 0}</span>
+                  </div>
 
                   {currentUser && !isAuthor && (
                     <>
@@ -179,13 +190,20 @@ function GamePage() {
                           Записаться
                         </button>
                       ) : (
+                        <>
                         <button className="leave-btn" onClick={() => handleLeave(match.id)}>
                           Отписаться
                         </button>
-                      )}
+                      
+                        <Link to={`/match/${match.userId}`} className="chat-btn">
+                          Чат с автором
+                        </Link>
+                        </>
+                      )} 
+                    
                     </>
                   )}
-
+                    
                   {isAuthor && (
                     <button className="delete-btn" onClick={() => handleDelete(match.id)}>
                       Удалить

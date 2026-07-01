@@ -75,7 +75,7 @@ exports.uploadAvatar = async (req, res) => {
       return res.status(404).json({ error: 'Пользователь не найден' });
     }
 
-    // Удаляем старый аватар
+
     if (user.avatar) {
       const oldPath = path.join(__dirname, '../uploads', user.avatar);
       if (fs.existsSync(oldPath)) {
@@ -97,6 +97,7 @@ exports.uploadAvatar = async (req, res) => {
     res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 };
+
 
 exports.deleteAvatar = async (req, res) => {
   try {

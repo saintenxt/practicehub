@@ -7,7 +7,7 @@ function Companies() {
       <div className="companies_container">
         <ul className="companies_list">
           <li className="companies_company">
-            <a href="/" className="inform">Дополнительная информация</a>
+            <a href="/authors" className="inform">Дополнительная информация</a>
           </li>
           <li className="companies_company">
             <a href="/" className="inform">Ссылки</a>

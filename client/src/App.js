@@ -8,8 +8,9 @@ import Game from './pages/GamePage';
 import Companies from './pages/Companies';
 import ProtectedRoute from './components/protectedRoute';
 import ProfilePage from './pages/ProfilePage';
-
-
+import MessagePage from './pages/MessagePage';
+import './App.css';
+import AuthorsPage from './pages/AuthorsPage';
 
 function App() {
   return (
@@ -29,18 +30,35 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/profile" element={
-          <ProtectedRoute>
-            <ProfilePage />
-          </ProtectedRoute>
-      } />
-        <Route path="/matches/:game" element={
-          <ProtectedRoute>
-            <Game />
-          </ProtectedRoute>
-          } />
-
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/match"
+          element={
+            <ProtectedRoute>
+              <>
+                <Header />
+                <MessagePage />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/matches/:game"
+          element={
+            <ProtectedRoute>
+              <Game />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/" element={<Navigate to="/mainpage" />} />
+        <Route path="/authors" element={<AuthorsPage />} />
         <Route path="*" element={<Navigate to="/mainpage" />} />
       </Routes>
     </BrowserRouter>

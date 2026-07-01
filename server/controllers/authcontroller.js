@@ -21,19 +21,25 @@ exports.register = async (req, res) => {
 }
 
 exports.login= async (req, res) => {
-  const { username, password } = req.body;
-  const user = UserModel.findUserByUsername(username);
-  if (!user) {
-    return res.status(401).json({ error: 'Неверный логин или пароль' });
-  }
+  const { username, password, email} = req.body;
+  const login = username || email;
 
+  if (!login || !password) {
+    return res.status(401).json({error: 'Введите логин или пароль'});
+  };
+  let user = UserModel.findUserByUsername(login);
+  if (!user) user = UserModel.findUserByEmail(login);
+
+  if (!user) {
+    return res.status(401).json({error: 'Неверный логин или пароль'})
+  }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     return res.status(401).json({ error: 'Неверный логин или пароль' });
-  }
+  };
 
   const payload = { username: user.username, role: user.role, id: user.id };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '6h' });
   res.cookie('auth_token', token, {
     httpOnly: true,
     secure: false,
