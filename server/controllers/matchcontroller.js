@@ -22,7 +22,22 @@ exports.createMatch = (req, res) => {
   if (!game || !title || !description || !date) {
     return res.status(400).json({ error: 'Все поля обязательны' });
   }
-  
+  const matchDate = new Date(date);
+  const now = new Date();
+  const maxDate = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());
+
+  if (isNaN(matchDate)) {
+    return res.status(400).json({error: 'Неправильный ввод данны'});
+  };
+
+  if (matchDate > now) {
+    return res.status(400).json({error: 'Дата должна быть актуальной'});
+  };
+
+  if (matchDate > maxDate) {
+    return res.status(400).json({error: 'Дата должна быть не позднее чем через год'});
+  };
+
   const userId = req.user.id;
   const newMatch = matchModel.createMatch(userId, game, title, description, date, status || 'open');
   

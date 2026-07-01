@@ -68,7 +68,15 @@ function GamePage() {
       alert('Заполните все поля');
       return;
     }
+    const thisDate = Date(date);
+    if (thisDate < new Date()) {
+      alert('Дата должна быть актуальной')
+      return;
+    }
 
+    if (thisDate > new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)) {
+      alert('Дата не позднее чем через год')
+    }
     try {
       const response = await fetch('/api/matches', {
         method: 'POST',
@@ -162,6 +170,11 @@ const handleJoin = async (matchId) => {
 
 
   if (loading) return <div className="loading">Загрузка...</div>;
+
+  const today = new Date();
+  const minDay = today.toISOString().slice(0, 16);
+  const maxDay = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+
 
   return (
     <div className="game-page" style={{backgroundImage: `url(${gameInfo.backgroundImage})`}}>
@@ -274,6 +287,8 @@ const handleJoin = async (matchId) => {
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
+                  min={minDay}
+                  max={maxDay}
                   required
                 />
               </label>
