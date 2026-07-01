@@ -93,21 +93,42 @@ function GamePage() {
     }
   };
 
-  const handleJoin = async (matchId) => {
-    try {
-      const res = await fetch(`/api/matches/${matchId}/join`, {
-        method: 'POST',
-        credentials: 'include'
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Ошибка');
-      setMatches(prev =>
-        prev.map(m => (m.id === matchId ? data.match : m))
-      );
-    } catch (err) {
-      alert(err.message);
+const handleJoin = async (matchId) => {
+  try {
+    const res = await fetch(`/api/matches/${matchId}/join`, {
+      method: 'POST',
+      credentials: 'include'
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Ошибка');
+
+
+    const match = matches.find(m => m.id === matchId);
+    if (match && currentUser) {
+
+      try {
+        await fetch('/api/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            toUserId: match.userId,
+            text: `Я записался на ваше объявление "${match.title}". Давайте договоримся об условиях.`
+          }),
+          credentials: 'include'
+        });
+        console.log('✅ Сообщение автору отправлено');
+      } catch (msgErr) {
+        console.error('❌ Не удалось отправить сообщение автору:', msgErr);
+      }
     }
-  };
+
+    setMatches(prev =>
+      prev.map(m => (m.id === matchId ? data.match : m))
+    );
+  } catch (err) {
+    alert(err.message);
+  }
+};
 
   const handleLeave = async (matchId) => {
     try {

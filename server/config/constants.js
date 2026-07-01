@@ -5,6 +5,5 @@ module.exports = {
   SECRET_KEY: 'ваш-супер-секретный-ключ',
   USER_FILES: path.join(__dirname, '../userdata.json'),
   MATCHES_FILE: path.join(__dirname, '../matches.json'),
-  MESSAGES_FILE: path.join(__dirname, '../messagedata.json'),
-  NOTIFICATION_FILE: path.join(__dirname, '../notificationdata.json')
+  MESSAGES_FILE: path.join(__dirname, '../messagedata.json')
 };

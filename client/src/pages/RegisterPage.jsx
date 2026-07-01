@@ -201,7 +201,7 @@ const RegisterPage = () => {
           }}
           onMouseEnter={(e) => e.target.style.background = '#545454'}
           onMouseLeave={(e) => e.target.style.background = '#7A7A7A'}
-          >Вход</button>
+          >Назад</button>
         </div>
       </form>
     </div>

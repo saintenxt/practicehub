@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useNavigate } from 'react';
 import Header from '../pages/Header';
 
+const navigate = useNavigate();
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,13 +17,13 @@ const ProfilePage = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // 👇 Новые состояния для матчей
+  
   const [userMatches, setUserMatches] = useState([]);
   const [matchesLoading, setMatchesLoading] = useState(true);
 
   useEffect(() => {
     fetchProfile();
-    fetchUserMatches(); // загружаем матчи параллельно
+    fetchUserMatches(); 
   }, []);
 
   const fetchProfile = async () => {
@@ -51,7 +52,7 @@ const ProfilePage = () => {
     }
   };
 
-  // 👇 Новая функция загрузки матчей пользователя
+  
   const fetchUserMatches = async () => {
     try {
       setMatchesLoading(true);
@@ -171,6 +172,24 @@ const ProfilePage = () => {
       setUser(data.user);
       setSuccess('Аватар удалён');
       setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      setError(err.message);
+      setTimeout(() => setError(''), 3000);
+    }
+  };
+
+  const handleLogout = async() => {
+    try {
+      const response = await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Ошибка выхода');
+      setSuccess('Вы вышли');
+      setTimeout(() => setSuccess(''), 3000);
+
+      navigate('/login');
     } catch (err) {
       setError(err.message);
       setTimeout(() => setError(''), 3000);
@@ -342,12 +361,11 @@ const ProfilePage = () => {
                 >
                   {showPasswordForm ? 'Отмена' : 'Сменить пароль'}
                 </button>
-                {/* Новая кнопка Выйти */}
                 <button
                   onClick={handleLogout}
                   style={{
                     padding: '12px 30px',
-                    background: '#d9534f',   // красный фон
+                    background: '#d9534f',   
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
