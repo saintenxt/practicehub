@@ -5,6 +5,7 @@ const { authenticateJWT } = require('../middleware/auth');
 
 
 router.get('/:game', matchController.getMatchesByGame);
+router.post('/my', authenticateJWT, matchController.getMyMatches)
 router.post('/',authenticateJWT, matchController.createMatch);
 router.patch('/:id/status', authenticateJWT, matchController.updateMatchStatus);
 router.delete('/:id',authenticateJWT, matchController.deleteMatch);
