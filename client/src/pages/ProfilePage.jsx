@@ -314,35 +314,50 @@ const ProfilePage = () => {
                   <span style={{ color: '#3C3C3C' }}>{user?.email}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', marginTop: '10px' }}>
-                  <button
-                    onClick={() => setEditMode(true)}
-                    style={{
-                      padding: '12px 30px',
-                      background: '#949494',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '8px',
-                      fontSize: '16px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Редактировать профиль
-                  </button>
-                  <button
-                    onClick={() => setShowPasswordForm(!showPasswordForm)}
-                    style={{
-                      padding: '12px 30px',
-                      background: '#7A7A7A',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '8px',
-                      fontSize: '16px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {showPasswordForm ? 'Отмена' : 'Сменить пароль'}
-                  </button>
-                </div>
+                <button
+                  onClick={() => setEditMode(true)}
+                  style={{
+                    padding: '12px 30px',
+                    background: '#949494',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Редактировать профиль
+                </button>
+                <button
+                  onClick={() => setShowPasswordForm(!showPasswordForm)}
+                  style={{
+                    padding: '12px 30px',
+                    background: '#7A7A7A',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {showPasswordForm ? 'Отмена' : 'Сменить пароль'}
+                </button>
+                {/* Новая кнопка Выйти */}
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    padding: '12px 30px',
+                    background: '#d9534f',   // красный фон
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Выйти
+                </button>
+              </div>
               </>
             ) : (
               <form onSubmit={handleUpdateProfile}>
@@ -603,4 +618,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default ProfilePage;п
