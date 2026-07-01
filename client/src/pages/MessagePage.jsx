@@ -3,10 +3,11 @@ import { useParams, useLocation } from 'react-router-dom';
 import './Message.css';
 import Header from './Header';
 
+
 function MessagePage() {
-  const { userId: paramUserId } = useParams();       // ID из URL
+  const { userId: paramUserId } = useParams();       
   const location = useLocation();
-  const { authorName } = location.state || {};      // Имя собеседника, переданное из GamePage
+  const { authorName } = location.state || {};      
 
   const [chats, setChats] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,19 +18,19 @@ function MessagePage() {
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
 
-  // Загружаем список диалогов при монтировании
+  
   useEffect(() => {
     loadConversations();
   }, []);
 
-  // Загружаем сообщения при смене активного чата
+  
   useEffect(() => {
     if (activeChatId) {
       loadMessages(activeChatId);
     }
   }, [activeChatId]);
 
-  // Функция загрузки списка диалогов (GET /api/messages)
+  
   const loadConversations = async () => {
     try {
       setLoading(true);
@@ -48,12 +49,12 @@ function MessagePage() {
         unreadCount: conv.unreadCount || 0
       }));
 
-      // Если в URL есть userId, проверяем, есть ли такой чат в списке
+      
       if (paramUserId) {
         const userIdNum = Number(paramUserId);
         const exists = formattedChats.some(chat => chat.id === userIdNum);
         if (!exists) {
-          // Создаём временный чат, если его нет
+          
           const newChat = {
             id: userIdNum,
             name: authorName || `Пользователь ${userIdNum}`,
@@ -64,7 +65,7 @@ function MessagePage() {
           };
           formattedChats = [newChat, ...formattedChats];
         }
-        // Устанавливаем активным этот чат
+        
         setActiveChatId(userIdNum);
       }
 
@@ -76,7 +77,7 @@ function MessagePage() {
     }
   };
 
-  // Загрузка сообщений с конкретным пользователем
+  
   const loadMessages = async (userId) => {
     try {
       const res = await fetch(`/api/messages/${userId}`, {
@@ -98,14 +99,14 @@ function MessagePage() {
         [userId]: formattedMessages
       }));
 
-      // Помечаем сообщения как прочитанные
+      
       await markMessagesAsRead(userId);
     } catch (err) {
       console.error('Ошибка загрузки сообщений:', err);
     }
   };
 
-  // Отправка сообщения
+  
   const sendMessage = async () => {
     if (!newMessage.trim() && attachedFiles.length === 0) return;
     if (!activeChatId) return;
@@ -144,7 +145,7 @@ function MessagePage() {
         [activeChatId]: [...(prev[activeChatId] || []), newMsg]
       }));
 
-      // Обновляем последнее сообщение в списке чатов
+      
       setChats(prevChats =>
         prevChats.map(chat =>
           chat.id === activeChatId
@@ -159,7 +160,7 @@ function MessagePage() {
     }
   };
 
-  // Отметка о прочтении
+  
   const markMessagesAsRead = async (userId) => {
     try {
       await fetch('/api/messages/read', {
@@ -173,7 +174,7 @@ function MessagePage() {
     }
   };
 
-  // Фильтрация чатов по поиску
+  
   const filteredChats = chats.filter(chat =>
     chat.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
